@@ -1,9 +1,37 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function (details) {
-    console.log('previousVersion', details.previousVersion);
+function getServers() {
+    return [];
+}
+
+function retrieveNotifications(alarm) {
+    if (alarm.name === 'retrieveNotifications') {
+        console.log('About to retrieve notifications');
+        
+        _.each(getServers(), function(server) {
+            uxhr(server.retrieveNotifications, {
+                user: 'atata'
+            }, {
+                complete: function (response) {
+                    console.log('notifications retrieved')
+                }
+            });
+        });
+    }
+}
+
+chrome.runtime.onStartup.addListener(function() {
 });
 
-chrome.browserAction.setBadgeText({text: '\'Allo'});
+chrome.runtime.onInstalled.addListener(function (details) {
+    console.log('github-notifier: starting up');
+    
+    chrome.browserAction.setBadgeText({text: '...'});
+    
+    chrome.alarms.create('retrieveNotifications', {
+        when: Date.now(),
+        periodInMinutes: 2
+    });
+});
 
-console.log('\'Allo \'Allo! Event Page for Browser Action');
+chrome.alarms.onAlarm.addListener(retrieveNotifications);
