@@ -1,0 +1,20 @@
+/* Overrides */
+.chrome-bootstrap .frame .view {
+    -webkit-margin-start: 20px;
+}
+
+.chrome-bootstrap h1 a {
+    color: #15c;
+}
+
+/* Custom styles */
+.chrome-bootstrap label {
+    display: inline-block;
+    width: 180px;
+    margin-bottom: 15px;
+}
+
+.availability {
+    color: dimgray;
+    vertical-align: middle;
+}

@@ -4,19 +4,56 @@
         <!-- bower:css -->
         <!-- endbower -->
 
-        <!-- build:css styles/main.css -->
-        <link href="styles/main.css" rel="stylesheet">
+        <!-- build:css styles/chrome-bootstrap.css -->
+        <link href="styles/chrome-bootstrap.css" rel="stylesheet">
+        <!-- endbuild -->
+
+        <!-- build:css styles/chrome-bootstrap-custom.css -->
+        <link href="styles/chrome-bootstrap-custom.css" rel="stylesheet">
+        <!-- endbuild -->
+
+        <!-- build:css styles/icomoon.css -->
+        <link href="styles/icomoon.css" rel="stylesheet">
         <!-- endbuild -->
 
         <!-- bower:js -->
-        <script src="lib/uxhr/uxhr.js"></script>
+        <script src="lib/zepto/zepto.js"></script>
+        <script src="lib/lodash/dist/lodash.min.js"></script>
         <!-- endbower -->
 
         <!-- build:js scripts/options.js -->
         <script src="scripts/options.js"></script>
         <!-- endbuild -->
     </head>
-    <body>
-      <h1>'Allo, 'Allo!</h1>
+    <body class="chrome-bootstrap">
+        <div class="frame">
+            <div class="mainview view">
+                <div class="selected">
+                    <header>
+                        <h1 class="icon-params">
+                            GitHub Notifier
+                            <small>The companion to <a href="https://github.scm.corp.ebay.com/atata/github-listener">Github Listener</a></small>
+                        </h1>                        
+                    </header>
+        
+                    <div class="content">
+                        <form>
+                            <section>
+                                <h3>Configuration</h3>
+                                <div>
+                                    <label for="username" class="icon-user">GitHub username:</label>
+                                    <input type="text" id="username" name="username">
+                                </div>
+                                
+                                <div>
+                                    <label for="listener" class="icon-cloud">GitHub Listener instance:</label>
+                                    <input type="text" placeholder="http://host:port" id="listener" name="listener"><span class="availability"></span>
+                                </div>                                
+                            </section>
+                        </form>
+                    </div>                    
+                </div>
+            </div>
+        </div>
     </body>
 </html>

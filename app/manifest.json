@@ -11,8 +11,8 @@
     "background": {
         "scripts": [
             "scripts/chromereload.js",
-            "lib/uxhr/uxhr.min.js",
             "lib/lodash/dist/lodash.min.js",
+            "lib/zepto/zepto.min.js",
             "scripts/background.js"
         ],
         "persistent": false
@@ -30,6 +30,8 @@
 
     "permissions": [
         "alarms",
-        "storage"
+        "storage",
+        "http://*/",
+        "https://*/"
     ]
 }
