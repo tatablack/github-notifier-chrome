@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "github notifier",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "This extension will connect to a github-listener and provide information about events happening in repos you're interested in. Different filters are included in the mix.",
+    "description": "The description of the application"
+  }
+}
