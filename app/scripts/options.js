@@ -51,7 +51,7 @@ function getOptions() {
 function initOptions() {
     chrome.storage.sync.get('username', function(result) {
         $('#username').val(result.username);
-        checkUsernameValidity(this.value);
+        checkUsernameValidity(result.username);
     });
 
     chrome.storage.sync.get('listener', function(result) {
@@ -74,7 +74,7 @@ function checkUsernameValidity(username) {
             addClass('icon-cross').
             text('Invalid username');
         
-        extensionMessagesError.log('GitHub usernames may only contain<br>alphanumeric characters or dashes<br>and cannot begin with a dash');
+        extensionMessagesError.log('GitHub usernames may only contain alphanumeric<br>characters or dashes and cannot begin with a dash');
     };    
 }
 
@@ -102,11 +102,8 @@ $(function() {
         });
         //self.close();
     });
+
+    $('#closeButton').on('click', function() {
+        self.close();
+    });
 });
-
-
-function isUrl(s) {
-	var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-	return regexp.test(s);
-}
-

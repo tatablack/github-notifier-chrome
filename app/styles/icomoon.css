@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-    src:url('/fonts/icomoon.eot?-k8sqg8');
-   	src:url('/fonts/icomoon.eot?#iefix-k8sqg8') format('embedded-opentype'),
-   		url('/fonts/icomoon.woff?-k8sqg8') format('woff'),
-   		url('/fonts/icomoon.ttf?-k8sqg8') format('truetype'),
-   		url('/fonts/icomoon.svg?-k8sqg8#icomoon') format('svg');
+	src:url('/fonts/icomoon.eot?3g2h84');
+	src:url('/fonts/icomoon.eot?#iefix3g2h84') format('embedded-opentype'),
+		url('/fonts/icomoon.woff?3g2h84') format('woff'),
+		url('/fonts/icomoon.ttf?3g2h84') format('truetype'),
+		url('/fonts/icomoon.svg?3g2h84#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -26,24 +26,34 @@
 .icon-params:before {
 	content: "\e601";
 }
+
+.icon-close:before {
+    font-size: 16px;
+	content: "\e606";
+}
+
 .icon-user:before {
 	content: "\e602";
-    margin-right: 5px;
+    margin-right: 8px;
+    font-size: 15px;
 }
+
+.icon-cloud:before {
+	content: "\e603";
+    margin-right: 8px;
+    font-size: 15px;
+}
+
 .icon-checkmark:before {
 	content: "\e600";
     color: green;
     font-size: 14px;
     padding: 0 2px 0 5px;
 }
+
 .icon-cross:before {
 	content: "\e604";
     color: red;
     font-size: 14px;
     padding: 0 2px 0 5px;
 }
-.icon-cloud:before {
-	content: "\e603";
-    margin-right: 5px;
-}
-

@@ -1,6 +1,11 @@
 /* Overrides */
 .chrome-bootstrap .frame .view {
     -webkit-margin-start: 20px;
+    margin: 0 auto;
+}
+
+.chrome-bootstrap .frame .mainview > .selected {
+    margin: 0 auto;
 }
 
 .chrome-bootstrap h1 a {
@@ -24,4 +29,8 @@
 
 #saveButton {
     font-size: 12px;
+}
+
+#closeButton {
+    cursor: pointer;
 }
