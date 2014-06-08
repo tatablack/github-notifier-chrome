@@ -104,7 +104,6 @@ $(function() {
         chrome.storage.sync.set(getOptions(), function() {
             extensionMessagesSuccess.log('Options saved');
         });
-        //self.close();
     });
 
     $('#closeButton').on('click', function() {
