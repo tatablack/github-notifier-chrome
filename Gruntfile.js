@@ -40,6 +40,13 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
+            jst: {
+                files: ['<%= config.app %>/templates/{,*/}*.jst'],
+                tasks: ['lodash'],
+                options: {
+                    livereload: true
+                }
+            },
             gruntfile: {
                 files: ['Gruntfile.js']
             },
@@ -111,7 +118,7 @@ module.exports = function (grunt) {
                 force: true,
                 jshintrc: true,
                 reporter: require('jshint-stylish'),
-                globals : {
+                globals: {
                     'chrome': true,
                     '_': true,
                     '$': true,
@@ -297,9 +304,23 @@ module.exports = function (grunt) {
                     dest: ''
                 }]
             }
+        },
+
+        lodash: {
+            target: {
+                dest: 'app/lib/lodash.templates.js'
+            },
+            options: {
+                // modifiers for prepared builds
+                // backbone, legacy, modern, mobile, strict, underscore
+                'template': 'app/templates/*.jst',
+                'flags': [
+                    '--minify'
+                ]
+            }
         }
     });
-
+        
     grunt.registerTask('debug', function () {
         grunt.task.run([
             'jshint',
@@ -317,6 +338,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'chromeManifest:dist',
+        'lodash',
         'useminPrepare',
         'concurrent:dist',
         'cssmin',

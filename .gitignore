@@ -6,3 +6,4 @@ dist
 test/lib
 package
 node_modules
+app/lib/lodash.templates.js
