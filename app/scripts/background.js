@@ -1,22 +1,35 @@
 'use strict';
 
-function getServers() {
-    return [];
+function getFromStorage(key) {
+    return new Promise(function (resolve, reject) {
+        chrome.storage.sync.get(key, function(result) {
+            if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError));
+            } else {
+                resolve(result[key]);
+            }
+        });
+    });
 }
 
 function retrieveNotifications(alarm) {
     if (alarm.name === 'retrieveNotifications') {
         console.log('github-notifier: about to retrieve notifications');
         
-        _.each(getServers(), function(server) {
-//            uxhr(server.retrieveNotifications, {
-//                user: 'atata'
-//            }, {
-//                complete: function (response) {
-//                    console.log('github-notifier: notifications retrieved')
-//                }
-//            });
-        });
+        Promise.all([getFromStorage('username'), getFromStorage('listener')]).then(function(results) {
+            $.ajax({
+                url: results[1] + '/poll',
+                data: { username: results[0] },
+                success: function(response) {
+                    console.log('github-notifier: notifications retrieved')
+                },
+                error: function(xhr, type) {
+                    console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
+                },
+                complete: function() {
+                }
+            });
+        })
     }
 }
 
