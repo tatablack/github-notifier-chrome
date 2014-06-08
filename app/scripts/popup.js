@@ -12,11 +12,26 @@ function getFromStorage(key) {
     });
 }
 
+function initLinks() {
+    $('body').on('click', 'a', function(evt) {
+        evt.preventDefault();
+        chrome.tabs.create({ url: $(this).attr('href') });
+    });
+
+    $('body').on('click', '.tag-clickable', function(evt) {
+        chrome.tabs.create({ url: $(this).data('url') });
+        return false;
+    });
+}
+
 $(function() {
+    initLinks();
+
     getFromStorage('commits').then(function(commits) {
         // Here we should do some pre-formatting of our data
         // (like moment(commit.timestamp).fromNow(); )
         // ..unless we want to do it in the template
-        $('body').html(_.templates['row']({ commits: commits }));
+        $('.mainview').height((58 * commits.length) + 10);
+        $('#notifications').html(_.templates['row']({ commits: commits }));
     });
 });

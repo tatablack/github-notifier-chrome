@@ -1,0 +1,24 @@
+<ul class="highlightable">
+    <% _.forEach(commits, function(commit) { %>
+        <li>
+            <a href="<%- commit.url %>">
+                <div class="commit-thumbnail">
+                    <img src="<%- 'http://www.gravatar.com/avatar/' + commit.author.emailHash + '?d=identicon&s=24' %>">
+                </div>
+                <div class="commit-info">
+                    <div class="commit-message"><%- commit.message %></div>
+                    <dl>
+                        <dt>
+                            <ul class="tags">
+                                <li class="tag-clickable" data-url="<%- commit.repository.url %>"><%- commit.repository.name %></li>
+                            </ul>
+                        </dt>
+                        <dd><span class="commit-author"><%- commit.author.name %></span> authored this <%- moment(commit.timestamp).fromNow() %></dd>
+                    </dl>
+                </div>
+            </a>
+            
+            <a class="action">Ack</a>
+        </li>
+    <% }); %>
+</ul>

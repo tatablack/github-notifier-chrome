@@ -1,15 +1,45 @@
+/* Overrides */
+.chrome-bootstrap .frame .view {
+    -webkit-margin-start: 0;
+    width: 600px;
+}
+
+.chrome-bootstrap .frame .content {
+    padding-top: 5px;
+    width: 600px;
+}
+
+.chrome-bootstrap section {
+    margin-top: 0;
+    -webkit-padding-start: 5px;
+}
+
+.chrome-bootstrap .highlightable li {
+    padding: 5px 0;
+}
+
+.chrome-bootstrap .highlightable .tags li a {
+    display: inline;
+}
+
+/* Custom styles */
 .commit-thumbnail,
 .commit-info {
-    float: left;
+    display: inline-block;
 }
 
 .commit-message {
+    display: inline-block;
 }
 
 .commit-author {
     font-weight: bold;
 }
 
-.commit-tags {
-    
+.tag-clickable {
+    cursor: pointer;
+}
+
+.chrome-bootstrap ul.tags li.tag-clickable:hover {
+    background-color: #2d509a;
 }
