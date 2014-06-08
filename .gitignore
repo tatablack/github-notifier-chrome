@@ -3,7 +3,6 @@ temp
 .tmp
 dist
 .sass-cache
-app/lib
 test/lib
 package
 node_modules

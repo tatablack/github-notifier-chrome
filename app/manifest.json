@@ -11,9 +11,9 @@
     "background": {
         "scripts": [
             "scripts/chromereload.js",
-            "lib/lodash/dist/lodash.min.js",
-            "lib/zepto/zepto.min.js",
-            "lib/promiscuous/dist/promiscuous-browser.js",
+            "lib/lodash.custom.min.js",
+            "lib/zepto.min.js",
+            "lib/promiscuous-browser.js",
             "scripts/background.js"
         ],
         "persistent": false
