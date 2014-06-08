@@ -14,9 +14,9 @@ function getFromStorage(key) {
 
 function retrieveNotifications(alarm) {
     if (alarm.name === 'retrieveNotifications') {
-        console.log('github-notifier: about to retrieve notifications');
-        
         Promise.all([getFromStorage('username'), getFromStorage('listener')]).then(function(results) {
+            console.log('github-notifier: about to retrieve notifications');
+            
             $.ajax({
                 url: results[1] + '/notifications/' + results[0],
                 success: function(response) {
@@ -27,6 +27,7 @@ function retrieveNotifications(alarm) {
                     console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
                 },
                 complete: function() {
+                    console.log('github-notifier: ajax call finished');
                 }
             });
         })
@@ -46,7 +47,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
     
     chrome.alarms.create('retrieveNotifications', {
         when: Date.now(),
-        periodInMinutes: 2
+        periodInMinutes: 5
     });
 });
 
