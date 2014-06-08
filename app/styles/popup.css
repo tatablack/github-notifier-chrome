@@ -1,0 +1,15 @@
+.commit-thumbnail,
+.commit-info {
+    float: left;
+}
+
+.commit-message {
+}
+
+.commit-author {
+    font-weight: bold;
+}
+
+.commit-tags {
+    
+}

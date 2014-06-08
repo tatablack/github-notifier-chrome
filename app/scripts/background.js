@@ -26,6 +26,7 @@ function getBadgeBackgroundColor(notificationCount) {
     return { color: badgeBackgroundColor };
 }
 
+
 function getFromStorage(key) {
     return new Promise(function (resolve, reject) {
         chrome.storage.sync.get(key, function(result) {
@@ -39,7 +40,10 @@ function getFromStorage(key) {
 }
 
 function saveToStorage(key, value) {
-    chrome.storage.sync.set({ key: value}, function(result) {
+    var toStore = {};
+    toStore[key] = value;
+    
+    chrome.storage.sync.set(toStore, function() {
         if (chrome.runtime.lastError) {
             console.error('Unable to save %s. There was an error: %s', key, chrome.runtime.lastError.message);
         }
@@ -103,3 +107,15 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 chrome.alarms.onAlarm.addListener(retrieveNotifications);
+
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    _.forOwn(changes, function(value, key) {
+        console.log('Storage key "%s" changed. ' +
+            'Old value was "%s", new value is "%s".',
+            key,
+            value.oldValue,
+            value.newValue
+        );
+    });
+});
