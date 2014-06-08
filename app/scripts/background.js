@@ -38,6 +38,27 @@ function getFromStorage(key) {
     });
 }
 
+function saveToStorage(key, value) {
+    chrome.storage.sync.set({ key: value}, function(result) {
+        if (chrome.runtime.lastError) {
+            console.error('Unable to save %s. There was an error: %s', key, chrome.runtime.lastError.message);
+        }
+    });
+}
+
+function setTitle(count) {
+    if (count) {
+        chrome.browserAction.setTitle({ title: count + ' notifications awaiting your attention' });
+    } else {
+        chrome.browserAction.setTitle({ title: '' });
+    }
+}
+
+function setBadge(count) {
+    chrome.browserAction.setBadgeText({ text: '' + count });
+    chrome.browserAction.setBadgeBackgroundColor(getBadgeBackgroundColor(count));
+}
+
 function retrieveNotifications(alarm) {
     if (alarm.name === 'retrieveNotifications') {
         Promise.all([getFromStorage('username'), getFromStorage('listener')]).then(function(results) {
@@ -47,9 +68,10 @@ function retrieveNotifications(alarm) {
                 url: results[1] + '/notifications/' + results[0],
                 success: function(response) {
                     console.log('github-notifier: notifications retrieved');
-                    console.log(response);
-                    chrome.browserAction.setBadgeText({ text: '' + response.length });
-                    chrome.browserAction.setBadgeBackgroundColor(getBadgeBackgroundColor(response.length));
+
+                    setTitle(response.commits.length);
+                    setBadge(response.commits.length);
+                    saveToStorage('commits', response.commits);
                 },
                 error: function(xhr, type) {
                     console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
@@ -58,7 +80,7 @@ function retrieveNotifications(alarm) {
                     console.log('github-notifier: ajax call finished');
                 }
             });
-        })
+        });
     }
 }
 
