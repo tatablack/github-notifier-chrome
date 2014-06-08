@@ -29,8 +29,32 @@ function checkAvailability(url) {
     });
 }
 
+function getOptions() {
+    var options = {
+        'username': $('#username').val()
+    };
+    
+    if ($('.availability').hasClass('icon-checkmark')) {
+        options['listener'] = $('#listener').val();
+    }
+    
+    return options;
+}
+
+function initOptions() {
+    chrome.storage.sync.get('username', function(result) {
+        $('#username').val(result.username);
+    });
+
+    chrome.storage.sync.get('listener', function(result) {
+        $('#listener').val(result.listener);
+    });
+}
+
 $(function() {
     var debouncedCheckAvailability = _.debounce(checkAvailability, 200);
+    
+    initOptions();
     
     $('#listener').on('input', function() {
         if (UrlRegExp.test(this.value)) {
@@ -39,7 +63,8 @@ $(function() {
     });
     
     $('#saveButton').on('click', function() {
-        self.close();
+        chrome.storage.sync.set(getOptions());
+        //self.close();
     });
 });
 
