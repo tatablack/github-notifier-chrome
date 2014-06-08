@@ -12,11 +12,10 @@ function checkAvailability(url) {
     currentRequest = $.ajax({
         url: url + '/ping',
         success: function(response) {
-            var json = $.parseJSON(response);
             $('.availability').
                 removeClass('icon-cross').
                 addClass('icon-checkmark').
-                text('Github Listener v' + json.version + ' found');
+                text('Github Listener v' + response.version + ' found');
         },
         error: function(status, statusText, responseText) {
             $('.availability').
@@ -32,10 +31,15 @@ function checkAvailability(url) {
 
 $(function() {
     var debouncedCheckAvailability = _.debounce(checkAvailability, 200);
+    
     $('#listener').on('input', function() {
         if (UrlRegExp.test(this.value)) {
             debouncedCheckAvailability(this.value);
         };
+    });
+    
+    $('#saveButton').on('click', function() {
+        self.close();
     });
 });
 

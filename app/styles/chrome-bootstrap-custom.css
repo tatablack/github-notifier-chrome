@@ -16,5 +16,8 @@
 
 .availability {
     color: dimgray;
-    vertical-align: middle;
+}
+
+#saveButton {
+    font-size: 12px;
 }
