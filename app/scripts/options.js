@@ -1,10 +1,16 @@
 'use strict';
 
-var UrlRegExp = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
+var urlRegExp = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i,
+    usernameRegExp = /^[a-zA-Z0-9]+[a-zA-Z0-9\-]*$/;
+
 var currentRequest;
-var extensionMessages = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-success'})
+
+var extensionMessagesSuccess = humane.create({ baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-success' }),
+    extensionMessagesError = humane.create({ timeout: 5000, clickToClose: true, baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error' });
 
 function checkAvailability(url) {
+    if (!url) return;
+    
     if (currentRequest) {
         console.log('A request was already executing');
         currentRequest.abort();
@@ -13,13 +19,13 @@ function checkAvailability(url) {
     currentRequest = $.ajax({
         url: url + '/ping',
         success: function(response) {
-            $('.availability').
+            $('.listener-validation').
                 removeClass('icon-cross').
                 addClass('icon-checkmark').
                 text('Github Listener v' + response.version + ' found');
         },
         error: function(status, statusText, responseText) {
-            $('.availability').
+            $('.listener-validation').
                 removeClass('icon-checkmark').
                 addClass('icon-cross').
                 text('Server not available');
@@ -35,7 +41,7 @@ function getOptions() {
         'username': $('#username').val()
     };
     
-    if ($('.availability').hasClass('icon-checkmark')) {
+    if ($('.listener-validation').hasClass('icon-checkmark')) {
         options['listener'] = $('#listener').val();
     }
     
@@ -45,6 +51,7 @@ function getOptions() {
 function initOptions() {
     chrome.storage.sync.get('username', function(result) {
         $('#username').val(result.username);
+        checkUsernameValidity(this.value);
     });
 
     chrome.storage.sync.get('listener', function(result) {
@@ -53,13 +60,36 @@ function initOptions() {
     });
 }
 
+function checkUsernameValidity(username) {
+    if (!username) return;
+    
+    if (usernameRegExp.test(username)) {
+        $('.user-validation').
+            removeClass('icon-cross').
+            addClass('icon-checkmark').
+            text('This seems a valid GitHub username');
+    } else {
+        $('.user-validation').
+            removeClass('icon-checkmark').
+            addClass('icon-cross').
+            text('Invalid username');
+        
+        extensionMessagesError.log('GitHub usernames may only contain<br>alphanumeric characters or dashes<br>and cannot begin with a dash');
+    };    
+}
+
 $(function() {
     var debouncedCheckAvailability = _.debounce(checkAvailability, 200);
     
     initOptions();
     
+    $('#username').on('input', function() {
+        console.log(this.value);
+        checkUsernameValidity(this.value);
+    });
+    
     $('#listener').on('input', function() {
-        if (UrlRegExp.test(this.value)) {
+        if (urlRegExp.test(this.value)) {
             debouncedCheckAvailability(this.value);
         };
     });
@@ -68,7 +98,7 @@ $(function() {
         evt.preventDefault();
         
         chrome.storage.sync.set(getOptions(), function() {
-            extensionMessages.log('Options saved');
+            extensionMessagesSuccess.log('Options saved');
         });
         //self.close();
     });
