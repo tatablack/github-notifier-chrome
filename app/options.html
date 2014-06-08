@@ -16,9 +16,14 @@
         <link href="styles/icomoon.css" rel="stylesheet">
         <!-- endbuild -->
 
+        <!-- build:css lib/humane/themes/jackedup.css -->
+        <link href="lib/humane/themes/jackedup.css" rel="stylesheet">
+        <!-- endbuild -->
+
         <!-- bower:js -->
         <script src="lib/zepto/zepto.js"></script>
         <script src="lib/lodash/dist/lodash.min.js"></script>
+        <script src="lib/humane/humane.min.js"></script>
         <!-- endbower -->
 
         <!-- build:js scripts/options.js -->
@@ -33,9 +38,6 @@
                         <h1 class="icon-params">
                             GitHub Notifier
                             <small>The companion to <a href="https://github.scm.corp.ebay.com/atata/github-listener">Github Listener</a></small>
-                            <div class="corner">
-                                <button id="saveButton">Save and close</button>
-                            </div>
                         </h1>                        
                     </header>
         
@@ -53,6 +55,11 @@
                                     <input type="text" placeholder="http://host:port" id="listener" name="listener"><span class="availability"></span>
                                 </div>                                
                             </section>
+
+                            <div class="controls">
+                                <div class="spacer"></div>
+                                <button id="saveButton">Save and close</button>
+                            </div>
                         </form>
                     </div>                    
                 </div>

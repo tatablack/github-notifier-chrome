@@ -2,6 +2,7 @@
 
 var UrlRegExp = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i;
 var currentRequest;
+var extensionMessages = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-success'})
 
 function checkAvailability(url) {
     if (currentRequest) {
@@ -48,6 +49,7 @@ function initOptions() {
 
     chrome.storage.sync.get('listener', function(result) {
         $('#listener').val(result.listener);
+        checkAvailability(result.listener);
     });
 }
 
@@ -62,8 +64,12 @@ $(function() {
         };
     });
     
-    $('#saveButton').on('click', function() {
-        chrome.storage.sync.set(getOptions());
+    $('#saveButton').on('click', function(evt) {
+        evt.preventDefault();
+        
+        chrome.storage.sync.set(getOptions(), function() {
+            extensionMessages.log('Options saved');
+        });
         //self.close();
     });
 });
