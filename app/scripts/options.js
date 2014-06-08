@@ -9,7 +9,9 @@ var extensionMessagesSuccess = humane.create({ baseCls: 'humane-jackedup', addnC
     extensionMessagesError = humane.create({ timeout: 5000, clickToClose: true, baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error' });
 
 function checkAvailability(url) {
-    if (!url) return;
+    if (!url) {
+        return;
+    }
     
     if (currentRequest) {
         console.log('A request was already executing');
@@ -31,7 +33,7 @@ function checkAvailability(url) {
                 text('Server not available');
         },
         complete: function() {
-            currentRequest = null;            
+            currentRequest = null;
         }
     });
 }
@@ -61,7 +63,9 @@ function initOptions() {
 }
 
 function checkUsernameValidity(username) {
-    if (!username) return;
+    if (!username) {
+        return;
+    }
     
     if (usernameRegExp.test(username)) {
         $('.user-validation').
@@ -75,7 +79,7 @@ function checkUsernameValidity(username) {
             text('Invalid username');
         
         extensionMessagesError.log('GitHub usernames may only contain alphanumeric<br>characters or dashes and cannot begin with a dash');
-    };    
+    }
 }
 
 $(function() {
@@ -91,7 +95,7 @@ $(function() {
     $('#listener').on('input', function() {
         if (urlRegExp.test(this.value)) {
             debouncedCheckAvailability(this.value);
-        };
+        }
     });
     
     $('#saveButton').on('click', function(evt) {
