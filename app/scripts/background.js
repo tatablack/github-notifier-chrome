@@ -18,10 +18,10 @@ function retrieveNotifications(alarm) {
         
         Promise.all([getFromStorage('username'), getFromStorage('listener')]).then(function(results) {
             $.ajax({
-                url: results[1] + '/poll',
-                data: { username: results[0] },
+                url: results[1] + '/notifications/' + results[0],
                 success: function(response) {
-                    console.log('github-notifier: notifications retrieved')
+                    console.log('github-notifier: notifications retrieved');
+                    console.log(response);
                 },
                 error: function(xhr, type) {
                     console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
