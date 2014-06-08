@@ -108,8 +108,16 @@ module.exports = function (grunt) {
         // Make sure code styles are up to par and there are no obvious mistakes
         jshint: {
             options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
+                force: true,
+                jshintrc: true,
+                reporter: require('jshint-stylish'),
+                globals : {
+                    'chrome': true,
+                    '_': true,
+                    '$': true,
+                    'Promise': true,
+                    'humane': true
+                }
             },
             all: [
                 'Gruntfile.js',
