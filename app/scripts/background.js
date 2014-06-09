@@ -1,9 +1,12 @@
 'use strict';
 
 function retrieveNotifications() {
-    Promise.all([ChromeStorage.read('username'), ChromeStorage.read('listener')]).then(function(results) {
+    Promise.all([
+        ChromeStorage.read('username'),
+        ChromeStorage.read('listener')]).
+    then(function(results) {
         $.ajax({
-            url: results[1] + '/notifications/' + results[0],
+            url: results[1] + '/v1/notifications/' + results[0],
             success: function(response) {
                 var count = response.commits ? response.commits.length : 0;
                 console.log('github-notifier: %d commits retrieved', count);

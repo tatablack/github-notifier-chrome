@@ -21,13 +21,13 @@ function checkAvailability(url) {
     }
     
     currentRequest = $.ajax({
-        url: url + '/ping',
+        url: url + '/v1',
         success: function(response) {
             $('.listener-validation').
                 removeClass('icon-cross').
                 addClass('icon-checkmark');
             
-            $('.listener-validation-message').text('Github Listener v' + response.version + ' found');
+            $('.listener-validation-message').text('Github Listener v' + response.server.version + ' found');
         },
         error: function() {
             $('.listener-validation').
