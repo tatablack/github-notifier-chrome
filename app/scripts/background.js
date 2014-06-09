@@ -1,30 +1,7 @@
 'use strict';
 
-function getFromStorage(key) {
-    return new Promise(function (resolve, reject) {
-        chrome.storage.sync.get(key, function(result) {
-            if (chrome.runtime.lastError) {
-                reject(new Error(chrome.runtime.lastError));
-            } else {
-                resolve(result[key]);
-            }
-        });
-    });
-}
-
-function saveToStorage(key, value) {
-    var toStore = {};
-    toStore[key] = value;
-    
-    chrome.storage.sync.set(toStore, function() {
-        if (chrome.runtime.lastError) {
-            console.error('github-notifier: unable to save %s. There was an error: %s', key, chrome.runtime.lastError.message);
-        }
-    });
-}
-
 function retrieveNotifications() {
-    Promise.all([getFromStorage('username'), getFromStorage('listener')]).then(function(results) {
+    Promise.all([ChromeStorage.read('username'), ChromeStorage.read('listener')]).then(function(results) {
         console.log('github-notifier: about to retrieve notifications');
         
         $.ajax({
@@ -36,7 +13,7 @@ function retrieveNotifications() {
                 ChromeBadge.setAppearance(response.commits.length);
                 ChromeNotifications.informUser(response.commits);
 
-                saveToStorage('commits', response.commits);
+                ChromeStorage.save('commits', response.commits);
             },
             error: function(xhr) {
                 console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
@@ -64,7 +41,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
         console.log('github-notifier: just updated from version %s to %s', details.previousVersion, chrome.app.getDetails().version);
     }
 
-    chrome.browserAction.setBadgeText({text: '*'});
+    ChromeBadge.setAppearance();
     
     chrome.alarms.create('retrieveNotifications', {
         when: Date.now(),
