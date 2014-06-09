@@ -34,15 +34,30 @@
 #username,
 #listener {
     width: 283px;
+    padding-right: 18px;
 }
 
 .username-validation,
 .listener-validation {
-    margin: 0 5px 0 -20px;
+    margin: -2px 5px 0 -20px;
+    padding-top: 1px;
     vertical-align: middle;
+    line-height: 22px !important;
+    display: inline-block;
+}
+
+.username-validation.icon-checkmark,
+.listener-validation.icon-checkmark {
+    border-left: 1px solid green;
+}
+
+.username-validation.icon-cross,
+.listener-validation.icon-cross {
+    border-left: 1px solid red;
 }
 
 .username-validation-message,
 .listener-validation-message {
-    color: dimgray;
+    color: gray;
+    font-style: italic;
 }
