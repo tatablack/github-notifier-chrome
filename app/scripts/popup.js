@@ -1,5 +1,7 @@
 'use strict';
 
+var MentionRegExp = /(?:[\s])@([A-Za-z0-9]+[A-Za-z0-9-]+)/g;
+
 function getFromStorage(key) {
     return new Promise(function (resolve, reject) {
         chrome.storage.sync.get(key, function(result) {
@@ -24,13 +26,19 @@ function initLinks() {
     });
 }
 
+function prepareCommits(commits) {
+    _.each(commits, function(commit) {
+        commit.readableTimestamp = moment(commit.timestamp).fromNow();
+        commit.parsedMessage = commit.message.replace(MentionRegExp, '');
+    });
+}
+
 $(function() {
     initLinks();
 
     getFromStorage('commits').then(function(commits) {
-        // Here we should do some pre-formatting of our data
-        // (like moment(commit.timestamp).fromNow(); )
-        // ..unless we want to do it in the template
+        prepareCommits(commits);
+        
         $('.mainview').height((58 * commits.length) + 30);
         $('#notifications').html(_.templates['row']({ commits: commits }));
     });

@@ -11,14 +11,14 @@
                     <div class="icon-minus commit-files-removed"><%- commit.removed.length %></div>
                 </div>
                 <div class="commit-info">
-                    <div class="commit-message"><%- commit.message %></div>
+                    <div class="commit-message"><%- commit.parsedMessage %></div>
                     <dl>
                         <dt>
                             <ul class="tags">
                                 <li class="tag-clickable" data-url="<%- commit.repository.url %>"><%- commit.repository.name %></li>
                             </ul>
                         </dt>
-                        <dd><span class="commit-author"><%- commit.author.name %></span> authored this <%- moment(commit.timestamp).fromNow() %></dd>
+                        <dd><span class="commit-author"><%- commit.author.name %></span> authored this <%- commit.readableTimestamp %></dd>
                     </dl>
                 </div>
             </a>
