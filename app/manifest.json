@@ -14,6 +14,7 @@
             "lib/lodash.custom.min.js",
             "lib/zepto.min.js",
             "lib/promiscuous-browser.js",
+            "scripts/chromestorage.js",
             "scripts/chromenotifications.js",
             "scripts/chromebadge.js",
             "scripts/background.js"
