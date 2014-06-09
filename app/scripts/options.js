@@ -10,6 +10,8 @@ var extensionMessagesSuccess = humane.create({ baseCls: 'humane-jackedup', addnC
 
 function checkAvailability(url) {
     if (!url) {
+        $('.listener-validation').removeClass('icon-cross icon-checkmark');
+        $('.listener-validation-message').text('');
         return;
     }
     
@@ -66,6 +68,8 @@ function initOptions() {
 
 function checkUsernameValidity(username) {
     if (!username) {
+        $('.username-validation').removeClass('icon-cross icon-checkmark');
+        $('.username-validation-message').text('');
         return;
     }
     
