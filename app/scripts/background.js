@@ -2,8 +2,6 @@
 
 function retrieveNotifications() {
     Promise.all([ChromeStorage.read('username'), ChromeStorage.read('listener')]).then(function(results) {
-        console.log('github-notifier: about to retrieve notifications');
-        
         $.ajax({
             url: results[1] + '/notifications/' + results[0],
             success: function(response) {
@@ -16,9 +14,6 @@ function retrieveNotifications() {
             },
             error: function(xhr) {
                 console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
-            },
-            complete: function() {
-                console.log('github-notifier: ajax call finished');
             }
         });
     });

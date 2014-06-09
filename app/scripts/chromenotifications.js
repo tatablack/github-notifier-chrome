@@ -44,8 +44,6 @@ var ChromeNotifications = {
             items: getItems(commits)
         };
         
-        chrome.notifications.create('', notificationOptions, function(notificationId) {
-            console.log('Just shown a notification with id %s', notificationId);
-        });        
+        chrome.notifications.create('', notificationOptions, function(notificationId) {});
     }  
 };
