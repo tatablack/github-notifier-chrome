@@ -14,8 +14,8 @@ function getFromStorage(key) {
 
 function initLinks() {
     $('body').on('click', 'a', function(evt) {
-        evt.preventDefault();
         chrome.tabs.create({ url: $(this).attr('href') });
+        return false;
     });
 
     $('body').on('click', '.tag-clickable', function(evt) {
@@ -31,7 +31,7 @@ $(function() {
         // Here we should do some pre-formatting of our data
         // (like moment(commit.timestamp).fromNow(); )
         // ..unless we want to do it in the template
-        $('.mainview').height((58 * commits.length) + 10);
+        $('.mainview').height((58 * commits.length) + 30);
         $('#notifications').html(_.templates['row']({ commits: commits }));
     });
 });

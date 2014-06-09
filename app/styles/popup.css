@@ -29,7 +29,7 @@
 }
 
 .commit-thumbnail {
-    margin-right: 10px;
+    margin-right: 2px;
 }
 
 .commit-message {
@@ -39,6 +39,26 @@
 .commit-author {
     font-weight: bold;
     line-height: 16px;
+}
+
+.commit-files {
+    display: inline-block;
+    width: 21px;
+    font-size: 9px;
+    text-align: right;
+    margin-right: 2px;
+}
+
+.commit-files-added {
+    color: green;    
+}
+
+.commit-files-modified {
+    color: orange;    
+}
+
+.commit-files-removed {
+    color: red;
 }
 
 .tag-clickable {
