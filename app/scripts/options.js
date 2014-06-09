@@ -55,14 +55,12 @@ function getOptions() {
 }
 
 function initOptions() {
-    chrome.storage.sync.get('username', function(result) {
-        $('#username').val(result.username);
-        checkUsernameValidity(result.username);
-    });
+    Promise.all([ChromeStorage.read('username'), ChromeStorage.read('listener')]).then(function(results) {
+        $('#username').val(results[0]);
+        checkUsernameValidity(results[0]);
 
-    chrome.storage.sync.get('listener', function(result) {
-        $('#listener').val(result.listener);
-        checkAvailability(result.listener);
+        $('#listener').val(results[1]);
+        checkAvailability(results[1]);
     });
 }
 
@@ -113,7 +111,7 @@ $(function() {
 
         chrome.runtime.sendMessage({ command: 'retrieveNotifications'});
         
-        chrome.storage.sync.set(getOptions(), function() {
+        ChromeStorage.save(getOptions(), function() {
             extensionMessagesSuccess.log('Options saved');
         });
     });

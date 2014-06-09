@@ -13,15 +13,14 @@ var ChromeStorage = (function() {
         });
     };
     
-    var save = function(key, value) {
-        var toStore = {};
-        toStore[key] = value;
-        
-        chrome.storage.sync.set(toStore, function() {
-            if (chrome.runtime.lastError) {
-                console.error('github-notifier: unable to save %s. There was an error: %s', key, chrome.runtime.lastError.message);
-            }
-        });
+    var defaultCallback = function() {
+        if (chrome.runtime.lastError) {
+            console.error('github-notifier: unable to save. Error reported: %s', chrome.runtime.lastError.message);
+        }
+    };
+    
+    var save = function(object, callback) {
+        chrome.storage.sync.set(object, callback || defaultCallback);
     };
     
     return {

@@ -12,8 +12,7 @@ function retrieveNotifications() {
 
                 ChromeBadge.setAppearance(response.commits.length);
                 ChromeNotifications.informUser(response.commits);
-
-                ChromeStorage.save('commits', response.commits);
+                ChromeStorage.save({ commits: response.commits });
             },
             error: function(xhr) {
                 console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
