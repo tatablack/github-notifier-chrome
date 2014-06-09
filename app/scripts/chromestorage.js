@@ -1,3 +1,5 @@
+/*jshint unused:false */
+/*global chrome, Promise */
 var ChromeStorage = (function() {
     'use strict';
     

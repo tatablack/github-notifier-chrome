@@ -17,6 +17,7 @@
             "scripts/chromestorage.js",
             "scripts/chromenotifications.js",
             "scripts/chromebadge.js",
+            "scripts/githubnotifications.js",
             "scripts/background.js"
         ],
         "persistent": false

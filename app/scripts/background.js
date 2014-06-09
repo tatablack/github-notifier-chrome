@@ -1,66 +1,39 @@
-'use strict';
+/*jshint unused:false */
+/*global chrome, ChromeBadge, GitHubNotifications */
+var Background = (function() {
+    'use strict';
+    
+    // This is used for both alarms and messages
+    var retrieveNotificationsTrigger = function(trigger) {
+        if (trigger.name === 'retrieveNotifications') {
+            GitHubNotifications.loadFromServer();
+        }
+    };
 
-function retrieveNotifications() {
-    Promise.all([
-        ChromeStorage.read('username'),
-        ChromeStorage.read('listener')]).
-    then(function(results) {
-        $.ajax({
-            url: results[1] + '/v1/notifications/' + results[0],
-            success: function(response) {
-                var count = response.commits ? response.commits.length : 0;
-                console.log('github-notifier: %d commits retrieved', count);
+    // As soon as we create this alarm, we want to
+    // retrieve notifications. And every 5 minuts after that.
+    var createAlarm = function() {
+        chrome.alarms.create('retrieveNotifications', {
+            when: Date.now(),
+            periodInMinutes: 5
+        });        
+    };
 
-                ChromeBadge.setAppearance(response.commits.length);
-                ChromeNotifications.informUser(response.commits);
-                ChromeStorage.save({ commits: response.commits });
-            },
-            error: function(xhr) {
-                console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
-            }
+    // We need to do things when:
+    // - the extension is loaded
+    // - a 5-minute alarm fires
+    // - another part of the extension sends a message
+    var initListeners = function() {
+        chrome.runtime.onInstalled.addListener(function() {
+            console.log('github-notifier: starting up');
+            ChromeBadge.setAppearance();
+            createAlarm();
         });
-    });
-}
-
-function retrieveNotificationsTrigger(alarm) {
-    if (alarm.name === 'retrieveNotifications') {
-        retrieveNotifications();
-    }
-}
-
-chrome.runtime.onStartup.addListener(function() {
-});
-
-chrome.runtime.onInstalled.addListener(function (details) {
-    console.log('github-notifier: starting up');
+        
+        chrome.alarms.onAlarm.addListener(retrieveNotificationsTrigger);
+        chrome.runtime.onMessage.addListener(retrieveNotificationsTrigger);
+    };
     
-    if (details.reason === 'update') {
-        console.log('github-notifier: just updated from version %s to %s', details.previousVersion, chrome.app.getDetails().version);
-    }
-
-    ChromeBadge.setAppearance();
-    
-    chrome.alarms.create('retrieveNotifications', {
-        when: Date.now(),
-        periodInMinutes: 5
-    });
-});
-
-chrome.alarms.onAlarm.addListener(retrieveNotificationsTrigger);
-
-chrome.runtime.onMessage.addListener(function(request) {
-    if (request.command === 'retrieveNotifications') {
-        retrieveNotifications();        
-    }
-});
-
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-    _.forOwn(changes, function(value, key) {
-        console.log('github-notifier: storage key "%s" changed. ' +
-            'Old value was "%s", new value is "%s".',
-            key,
-            value.oldValue,
-            value.newValue
-        );
-    });
-});
+    // Let's make sure things start rolling
+    initListeners();
+})();

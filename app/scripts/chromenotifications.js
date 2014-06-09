@@ -1,28 +1,28 @@
-function getItems(commits) {
+/*jshint unused:false */
+/*global chrome */
+var ChromeNotifications = (function() {
     'use strict';
     
-    var items = {};
-    
-    _.each(commits, function(commit) {
-        if (!items[commit.repository.name]) {
-            items[commit.repository.name] = [];
-        }
+    var getItems = function(commits) {
+        var items = {};
         
-        items[commit.repository.name].push(commit.author.name);
-    });
-    
-    return _.map(items, function(value, key) {
-        return {
-            title: key,
-            message: _.uniq(value).toString().replace(',', ', ')
-        };
-    });
-}
-
-var ChromeNotifications = {
-    informUser: function(commits) {
-        'use strict';
+        _.each(commits, function(commit) {
+            if (!items[commit.repository.name]) {
+                items[commit.repository.name] = [];
+            }
+            
+            items[commit.repository.name].push(commit.author.name);
+        });
         
+        return _.map(items, function(value, key) {
+            return {
+                title: key,
+                message: _.uniq(value).toString().replace(',', ', ')
+            };
+        });
+    };
+    
+    var informUser = function(commits) {
         if (!commits.length) {
             return;
         }
@@ -45,5 +45,9 @@ var ChromeNotifications = {
         };
         
         chrome.notifications.create('', notificationOptions, function(notificationId) {});
-    }  
-};
+    };
+    
+    return {
+        informUser: informUser
+    };
+})();
