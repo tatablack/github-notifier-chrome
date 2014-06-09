@@ -1,32 +1,5 @@
 'use strict';
 
-var COLOR_FEWER = '#d6e685',
-    COLOR_FEW = '#8cc665',
-    COLOR_SOME = '#44a340',
-    COLOR_MANY = '#1e6823';
-
-function getBadgeBackgroundColor(notificationCount) {
-    var badgeBackgroundColor;
-    
-    switch(true) {
-        case notificationCount < 3:
-            badgeBackgroundColor = COLOR_FEWER;
-            break;
-        case notificationCount < 5:
-            badgeBackgroundColor = COLOR_FEW;
-            break;
-        case notificationCount < 9:
-            badgeBackgroundColor = COLOR_SOME;
-            break;
-        default:
-            badgeBackgroundColor = COLOR_MANY;
-            break;
-    }
-    
-    return { color: badgeBackgroundColor };
-}
-
-
 function getFromStorage(key) {
     return new Promise(function (resolve, reject) {
         chrome.storage.sync.get(key, function(result) {
@@ -50,19 +23,6 @@ function saveToStorage(key, value) {
     });
 }
 
-function setTitle(count) {
-    if (count) {
-        chrome.browserAction.setTitle({ title: count + ' notifications awaiting your attention' });
-    } else {
-        chrome.browserAction.setTitle({ title: '' });
-    }
-}
-
-function setBadge(count) {
-    chrome.browserAction.setBadgeText({ text: '' + count });
-    chrome.browserAction.setBadgeBackgroundColor(getBadgeBackgroundColor(count));
-}
-
 function retrieveNotifications() {
     Promise.all([getFromStorage('username'), getFromStorage('listener')]).then(function(results) {
         console.log('github-notifier: about to retrieve notifications');
@@ -73,10 +33,10 @@ function retrieveNotifications() {
                 var count = response.commits ? response.commits.length : 0;
                 console.log('github-notifier: %d commits retrieved', count);
 
-                setTitle(response.commits.length);
-                setBadge(response.commits.length);
-                saveToStorage('commits', response.commits);
+                ChromeBadge.setAppearance(response.commits.length);
                 ChromeNotifications.informUser(response.commits);
+
+                saveToStorage('commits', response.commits);
             },
             error: function(xhr) {
                 console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);

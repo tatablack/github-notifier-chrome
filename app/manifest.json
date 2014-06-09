@@ -15,6 +15,7 @@
             "lib/zepto.min.js",
             "lib/promiscuous-browser.js",
             "scripts/chromenotifications.js",
+            "scripts/chromebadge.js",
             "scripts/background.js"
         ],
         "persistent": false
