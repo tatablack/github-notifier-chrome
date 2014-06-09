@@ -1,12 +1,12 @@
 /* Overrides */
 .chrome-bootstrap .frame .view {
     -webkit-margin-start: 0;
-    width: 600px;
+    width: 550px;
 }
 
 .chrome-bootstrap .frame .content {
     padding-top: 5px;
-    width: 600px;
+    width: 550px;
 }
 
 .chrome-bootstrap section {
@@ -28,12 +28,17 @@
     display: inline-block;
 }
 
+.commit-thumbnail {
+    margin-right: 10px;
+}
+
 .commit-message {
     display: inline-block;
 }
 
 .commit-author {
     font-weight: bold;
+    line-height: 16px;
 }
 
 .tag-clickable {
