@@ -23,14 +23,26 @@
     margin-bottom: 15px;
 }
 
-.availability {
-    color: dimgray;
-}
-
 #saveButton {
     font-size: 12px;
 }
 
 #closeButton {
     cursor: pointer;
+}
+
+#username,
+#listener {
+    width: 283px;
+}
+
+.username-validation,
+.listener-validation {
+    margin: 0 5px 0 -20px;
+    vertical-align: middle;
+}
+
+.username-validation-message,
+.listener-validation-message {
+    color: dimgray;
 }

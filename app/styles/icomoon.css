@@ -48,14 +48,12 @@
 	content: "\e600";
     color: green;
     font-size: 14px;
-    padding: 0 2px 0 5px;
 }
 
 .icon-cross:before {
 	content: "\e604";
     color: red;
     font-size: 14px;
-    padding: 0 2px 0 5px;
 }
 
 .icon-pencil:before {

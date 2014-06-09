@@ -23,14 +23,16 @@ function checkAvailability(url) {
         success: function(response) {
             $('.listener-validation').
                 removeClass('icon-cross').
-                addClass('icon-checkmark').
-                text('Github Listener v' + response.version + ' found');
+                addClass('icon-checkmark');
+            
+            $('.listener-validation-message').text('Github Listener v' + response.version + ' found');
         },
         error: function(status, statusText, responseText) {
             $('.listener-validation').
                 removeClass('icon-checkmark').
-                addClass('icon-cross').
-                text('Server not available');
+                addClass('icon-cross');
+            
+            $('.listener-validation-message').text('Server not available');
         },
         complete: function() {
             currentRequest = null;
@@ -68,15 +70,17 @@ function checkUsernameValidity(username) {
     }
     
     if (usernameRegExp.test(username)) {
-        $('.user-validation').
+        $('.username-validation').
             removeClass('icon-cross').
-            addClass('icon-checkmark').
-            text('This seems a valid GitHub username');
+            addClass('icon-checkmark');
+
+        $('.username-validation-message').text('This seems a valid GitHub username');
     } else {
-        $('.user-validation').
+        $('.username-validation').
             removeClass('icon-checkmark').
-            addClass('icon-cross').
-            text('Invalid username');
+            addClass('icon-cross');
+
+        $('.username-validation-message').text('Invalid username');
         
         extensionMessagesError.log('GitHub usernames may only contain alphanumeric<br>characters or dashes and cannot begin with a dash');
     }
