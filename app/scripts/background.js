@@ -71,13 +71,14 @@ function retrieveNotifications(alarm) {
             $.ajax({
                 url: results[1] + '/notifications/' + results[0],
                 success: function(response) {
-                    console.log('github-notifier: notifications retrieved');
+                    var count = response.commits ? response.commits.length : 0;
+                    console.log('github-notifier: %d commits retrieved', count);
 
                     setTitle(response.commits.length);
                     setBadge(response.commits.length);
                     saveToStorage('commits', response.commits);
                 },
-                error: function(xhr, type) {
+                error: function(xhr) {
                     console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
                 },
                 complete: function() {
