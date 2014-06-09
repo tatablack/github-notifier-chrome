@@ -29,7 +29,7 @@ function checkAvailability(url) {
             
             $('.listener-validation-message').text('Github Listener v' + response.version + ' found');
         },
-        error: function(status, statusText, responseText) {
+        error: function() {
             $('.listener-validation').
                 removeClass('icon-checkmark').
                 addClass('icon-cross');
@@ -96,13 +96,15 @@ $(function() {
     initOptions();
     
     $('#username').on('input', function() {
-        console.log(this.value);
         checkUsernameValidity(this.value);
     });
     
     $('#listener').on('input', function() {
         if (urlRegExp.test(this.value)) {
             debouncedCheckAvailability(this.value);
+        } else {
+            $('.listener-validation').removeClass('icon-cross icon-checkmark');
+            $('.listener-validation-message').text('');            
         }
     });
     
