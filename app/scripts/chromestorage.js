@@ -3,7 +3,7 @@ var ChromeStorage = (function() {
     
     var read = function(key) {
         return new Promise(function (resolve, reject) {
-            chrome.storage.sync.get(key, function(result) {
+            chrome.storage.local.get(key, function(result) {
                 if (chrome.runtime.lastError) {
                     reject(new Error(chrome.runtime.lastError));
                 } else {
@@ -20,7 +20,7 @@ var ChromeStorage = (function() {
     };
     
     var save = function(object, callback) {
-        chrome.storage.sync.set(object, callback || defaultCallback);
+        chrome.storage.local.set(object, callback || defaultCallback);
     };
     
     return {
