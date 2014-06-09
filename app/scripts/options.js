@@ -108,6 +108,8 @@ $(function() {
     
     $('#saveButton').on('click', function(evt) {
         evt.preventDefault();
+
+        chrome.runtime.sendMessage({ command: 'retrieveNotifications'});
         
         chrome.storage.sync.set(getOptions(), function() {
             extensionMessagesSuccess.log('Options saved');
