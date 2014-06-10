@@ -42,6 +42,20 @@ var Options = (function() {
         });
     };
     
+    var checkUsernameValidity = function(username) {
+        if (!username) {
+            Marker.clearField('.username-validation');
+            return;
+        }
+        
+        if (usernameRegExp.test(username)) {
+            Marker.markAsValid('.username-validation', 'This seems a valid GitHub username');
+        } else {
+            Marker.markAsInvalid('.username-validation', 'Invalid username');
+            extensionMessagesError.log('GitHub usernames may only contain alphanumeric<br>characters or dashes and cannot begin with a dash');
+        }
+    };
+    
     var saveOptions = function() {
         var options = {};
         
@@ -78,20 +92,6 @@ var Options = (function() {
                 checkListenerAvailability(results[1]);                
             }
         });
-    };
-    
-    var checkUsernameValidity = function(username) {
-        if (!username) {
-            Marker.clearField('.username-validation');
-            return;
-        }
-        
-        if (usernameRegExp.test(username)) {
-            Marker.markAsValid('.username-validation', 'This seems a valid GitHub username');
-        } else {
-            Marker.markAsInvalid('.username-validation', 'Invalid username');
-            extensionMessagesError.log('GitHub usernames may only contain alphanumeric<br>characters or dashes and cannot begin with a dash');
-        }
     };
     
     var initFieldListeners = function() {
