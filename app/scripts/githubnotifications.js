@@ -8,6 +8,10 @@ var GitHubNotifications = (function() {
             ChromeStorage.read('username'),
             ChromeStorage.read('listener')]).
         then(function(results) {
+            if (_.compact(results).length !== 2) {
+                return;
+            }
+
             $.ajax({
                 url: results[1] + '/v1/notifications/' + results[0],
                 success: function(response) {
