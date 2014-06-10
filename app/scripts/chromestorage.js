@@ -25,8 +25,13 @@ var ChromeStorage = (function() {
         chrome.storage.local.set(object, callback || defaultCallback);
     };
     
+    var remove = function(key) {
+        chrome.storage.local.remove(key);
+    };
+    
     return {
         read: read,
-        save: save
+        save: save,
+        remove: remove
     };
 })();

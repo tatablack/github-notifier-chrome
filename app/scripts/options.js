@@ -39,14 +39,24 @@ var Options = (function() {
     };
     
     var saveOptions = function() {
-        var options = {
-            username: $('#username').val(),
-            listener: $('#listener').val()
-        };
-
-        ChromeStorage.save(options, function() {
-            extensionMessagesSuccess.log('Options saved');
+        var options = {};
+        
+        _.each(['username', 'listener'], function(selector) {
+            var value = $('#' + selector).val();
+            if (value) {
+                options[selector] = value;
+            } else {
+                ChromeStorage.remove(selector);
+            }
         });
+
+        if (!_.isEmpty(options)) {
+            ChromeStorage.save(options, function() {
+                extensionMessagesSuccess.log('Options saved');
+            });
+        } else {
+            extensionMessagesSuccess.log('Options saved');
+        }
     };
     
     var initOptions = function() {
@@ -54,11 +64,15 @@ var Options = (function() {
             ChromeStorage.read('username'),
             ChromeStorage.read('listener')
         ]).then(function(results) {
-            $('#username').val(results[0]);
-            checkUsernameValidity(results[0]);
+            if (results[0]) {
+                $('#username').val(results[0]);
+                checkUsernameValidity(results[0]);                
+            }
     
-            $('#listener').val(results[1]);
-            checkListenerAvailability(results[1]);
+            if (results[1]) {
+                $('#listener').val(results[1]);
+                checkListenerAvailability(results[1]);                
+            }
         });
     };
     
