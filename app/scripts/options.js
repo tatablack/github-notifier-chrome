@@ -124,10 +124,17 @@ var Options = (function() {
         });        
     };
     
+    var initStorageInformation = function() {
+        ChromeStorage.getUsage().then(function(usage) {
+            $('.storage-information').text('Storage in use: ' + usage);
+        });
+    };
+    
     $(function() {
         initOptions();
         initFieldListeners();
         initButtonListeners();
+        initStorageInformation();
     });
 })();
 

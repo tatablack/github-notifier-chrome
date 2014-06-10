@@ -7,7 +7,7 @@ var ChromeStorage = (function() {
         return new Promise(function (resolve, reject) {
             chrome.storage.local.get(key, function(result) {
                 if (chrome.runtime.lastError) {
-                    reject(new Error(chrome.runtime.lastError));
+                    reject(new Error(chrome.runtime.lastError.message));
                 } else {
                     resolve(result[key]);
                 }
@@ -29,9 +29,29 @@ var ChromeStorage = (function() {
         chrome.storage.local.remove(key);
     };
     
+    var formatFileSizeIEC = function(a,b,c,d,e) {
+        return (b = Math, c = b.log, d =1024, e = c(a)/c(d) | 0, a/b.pow(d,e)).
+            toFixed(2) + ' ' + ( e ? 'KMGTPEZY'[--e] + 'iB' : 'Bytes');
+    };
+
+    // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable/20463021#20463021
+    var getUsage = function() {
+        return new Promise(function(resolve, reject) {
+            chrome.storage.local.getBytesInUse(null, function(bytesInUse) {
+                if (chrome.runtime.lastError) {
+                    console.error('github-notifier: unable to retrieve storage information. Error reported: %s', chrome.runtime.lastError.message);
+                    reject(new Error(chrome.runtime.lastError.message));
+                } else {
+                    resolve(formatFileSizeIEC(bytesInUse));
+                }
+            });
+        });
+    };
+    
     return {
         read: read,
         save: save,
-        remove: remove
+        remove: remove,
+        getUsage: getUsage
     };
 })();
