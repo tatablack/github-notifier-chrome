@@ -27,7 +27,11 @@ var Options = (function() {
         currentRequest = $.ajax({
             url: url + '/v1',
             success: function(response) {
-                Marker.markAsValid('.listener-validation', 'Github Listener v' + response.server.version + ' found');
+                if (response.server && response.server.version) {
+                    Marker.markAsValid('.listener-validation', 'Github Listener v' + response.server.version + ' found');                    
+                } else {
+                    Marker.markAsInvalid('.listener-validation', 'Server not available');
+                }
             },
             error: function() {
                 Marker.markAsInvalid('.listener-validation', 'Server not available');
