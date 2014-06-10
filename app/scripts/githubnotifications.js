@@ -19,7 +19,7 @@ var GitHubNotifications = (function() {
                     console.log('github-notifier: %d commits retrieved', count);
     
                     ChromeBadge.setAppearance(response.commits.length);
-                    ChromeNotifications.informUser(response.commits);
+                    ChromeNotifications.show(response.commits);
                     ChromeStorage.save({ commits: response.commits });
                 },
                 error: function(xhr) {

@@ -22,7 +22,7 @@ var ChromeNotifications = (function() {
         });
     };
     
-    var informUser = function(commits) {
+    var show = function(commits) {
         if (!commits.length) {
             return;
         }
@@ -48,6 +48,6 @@ var ChromeNotifications = (function() {
     };
     
     return {
-        informUser: informUser
+        show: show
     };
 })();
