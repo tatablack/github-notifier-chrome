@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global chrome, humane, self, ChromeStorage */
+/*global chrome, humane, self, ChromeStorage, Marker */
 var Options = (function() {
     'use strict';
     
@@ -13,14 +13,9 @@ var Options = (function() {
         extensionMessagesError = humane.create({ timeout: 5000, clickToClose: true, baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error' });
     
     
-    var clearField = function(fieldName) {
-        $('.' + fieldName).removeClass('icon-cross icon-checkmark');
-        $('.' + fieldName + '-message').text('');
-    };
-    
     var checkListenerAvailability = function(url) {
         if (!url) {
-            clearField('listener-validation');
+            Marker.clearField('.listener-validation');
             return;
         }
         
@@ -32,18 +27,10 @@ var Options = (function() {
         currentRequest = $.ajax({
             url: url + '/v1',
             success: function(response) {
-                $('.listener-validation').
-                    removeClass('icon-cross').
-                    addClass('icon-checkmark');
-                
-                $('.listener-validation-message').text('Github Listener v' + response.server.version + ' found');
+                Marker.markAsValid('.listener-validation', 'Github Listener v' + response.server.version + ' found');
             },
             error: function() {
-                $('.listener-validation').
-                    removeClass('icon-checkmark').
-                    addClass('icon-cross');
-                
-                $('.listener-validation-message').text('Server not available');
+                Marker.markAsInvalid('.listener-validation', 'Server not available');
             },
             complete: function() {
                 currentRequest = null;
@@ -77,23 +64,14 @@ var Options = (function() {
     
     var checkUsernameValidity = function(username) {
         if (!username) {
-            clearField('username-validation');
+            Marker.clearField('.username-validation');
             return;
         }
         
         if (usernameRegExp.test(username)) {
-            $('.username-validation').
-                removeClass('icon-cross').
-                addClass('icon-checkmark');
-    
-            $('.username-validation-message').text('This seems a valid GitHub username');
+            Marker.markAsValid('.username-validation', 'This seems a valid GitHub username');
         } else {
-            $('.username-validation').
-                removeClass('icon-checkmark').
-                addClass('icon-cross');
-    
-            $('.username-validation-message').text('Invalid username');
-            
+            Marker.markAsInvalid('.username-validation', 'Invalid username');
             extensionMessagesError.log('GitHub usernames may only contain alphanumeric<br>characters or dashes and cannot begin with a dash');
         }
     };
@@ -109,7 +87,7 @@ var Options = (function() {
             if (urlRegExp.test(this.value)) {
                 debouncedCheckListenerAvailability(this.value);
             } else {
-                clearField('listener-validation');
+                Marker.clearField('.listener-validation');
             }
         });        
     };
