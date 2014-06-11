@@ -75,23 +75,24 @@ var Options = (function() {
         } else {
             extensionMessagesSuccess.log('Options saved');
         }
+        
+        // TODO: add remove saving (HTTP POST/PUT depending on the user being already registered or not)
     };
     
     var initOptions = function() {
-        Promise.all([
-            ChromeStorage.read('username'),
-            ChromeStorage.read('listener')
-        ]).then(function(results) {
-            if (results[0]) {
-                $('#username').val(results[0]);
-                checkUsernameValidity(results[0]);                
+        ChromeStorage.read(['username', 'listener']).then(
+            function(result) {
+                if (result.username) {
+                    $('#username').val(result.username);
+                    checkUsernameValidity(result.username);
+                }
+        
+                if (result.listener) {
+                    $('#listener').val(result.listener);
+                    checkListenerAvailability(result.listener);
+                }
             }
-    
-            if (results[1]) {
-                $('#listener').val(results[1]);
-                checkListenerAvailability(results[1]);                
-            }
-        });
+        );
     };
     
     var initFieldListeners = function() {

@@ -9,7 +9,7 @@ var ChromeStorage = (function() {
                 if (chrome.runtime.lastError) {
                     reject(new Error(chrome.runtime.lastError.message));
                 } else {
-                    resolve(result[key]);
+                    resolve(result);
                 }
             });
         });
