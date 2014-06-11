@@ -16,7 +16,7 @@ var Background = (function() {
         chrome.alarms.create('retrieveNotifications', {
             when: Date.now(),
             periodInMinutes: 5
-        });        
+        });
     };
 
     // We need to do things when:
@@ -30,7 +30,7 @@ var Background = (function() {
             Installation.ensureId();
             createAlarm();
         });
-        
+
         chrome.alarms.onAlarm.addListener(retrieveNotificationsTrigger);
         chrome.runtime.onMessage.addListener(retrieveNotificationsTrigger);
     };
