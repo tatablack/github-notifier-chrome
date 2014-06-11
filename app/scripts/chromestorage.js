@@ -29,12 +29,12 @@ var ChromeStorage = (function() {
         chrome.storage.local.remove(key);
     };
     
+    // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable/20463021#20463021
     var formatFileSizeIEC = function(a,b,c,d,e) {
         return (b = Math, c = b.log, d =1024, e = c(a)/c(d) | 0, a/b.pow(d,e)).
             toFixed(2) + ' ' + ( e ? 'KMGTPEZY'[--e] + 'iB' : 'Bytes');
     };
 
-    // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable/20463021#20463021
     var getUsage = function() {
         return new Promise(function(resolve, reject) {
             chrome.storage.local.getBytesInUse(null, function(bytesInUse) {

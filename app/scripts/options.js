@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global chrome, humane, self, ChromeStorage, Marker */
+/*global chrome, humane, self, ChromeStorage, Marker, Installation */
 var Options = (function() {
     'use strict';
     
@@ -71,12 +71,11 @@ var Options = (function() {
         if (!_.isEmpty(options)) {
             ChromeStorage.save(options, function() {
                 extensionMessagesSuccess.log('Options saved');
+                Installation.save();
             });
         } else {
             extensionMessagesSuccess.log('Options saved');
         }
-        
-        // TODO: add remove saving (HTTP POST/PUT depending on the user being already registered or not)
     };
     
     var initOptions = function() {

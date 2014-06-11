@@ -6,7 +6,7 @@ var GitHubNotifications = (function() {
     var loadFromServer = function() {
         ChromeStorage.read(['username', 'listener']).then(
             function(result) {
-                if (_.compact(result).length !== 2) {
+                if (_.keys(result).length !== 2) {
                     return;
                 }
     
