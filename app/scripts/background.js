@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global chrome, ChromeBadge, GitHubNotifications */
+/*global chrome, ChromeBadge, GitHubNotifications, Installation */
 var Background = (function() {
     'use strict';
     
@@ -27,6 +27,7 @@ var Background = (function() {
         chrome.runtime.onInstalled.addListener(function() {
             console.log('github-notifier: starting up');
             ChromeBadge.setAppearance();
+            Installation.ensureId();
             createAlarm();
         });
         

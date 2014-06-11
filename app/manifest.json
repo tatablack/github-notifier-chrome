@@ -18,6 +18,8 @@
             "scripts/chromenotifications.js",
             "scripts/chromebadge.js",
             "scripts/githubnotifications.js",
+            "scripts/uuid.js",
+            "scripts/installation.js",
             "scripts/background.js"
         ],
         "persistent": false
