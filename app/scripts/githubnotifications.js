@@ -4,14 +4,17 @@ var GitHubNotifications = (function() {
     'use strict';
     
     var loadFromServer = function() {
-        ChromeStorage.read(['username', 'listener']).then(
+        ChromeStorage.read(['installation', 'listener']).then(
             function(result) {
                 if (_.keys(result).length !== 2) {
                     return;
                 }
-    
+                
                 $.ajax({
-                    url: result.listener + '/v1/notifications/' + result.username,
+                    url: result.listener + '/v1/notifications',
+                    headers: {
+                        'Authorization': 'GitHubListener installationId="' + result.installation.installationId + '"'
+                    },
                     success: function(response) {
                         var count = response.commits ? response.commits.length : 0;
                         console.log('github-notifier: %d commits retrieved', count);
