@@ -121,7 +121,13 @@ var Options = (function() {
     
         $('#closeButton').on('click', function() {
             self.close();
-        });        
+        });
+        
+        $('.storage-information').on('click', function() {
+            ChromeStorage.read(null).then(function(result) {
+                console.log(result);
+            });
+        });
     };
     
     var initStorageInformation = function() {
