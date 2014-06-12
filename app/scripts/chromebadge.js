@@ -13,7 +13,7 @@ var ChromeBadge = (function() {
         var badgeBackgroundColor;
         
         switch(true) {
-            case notificationCount === undefined:
+            case !notificationCount:
                 badgeBackgroundColor = COLOR_NONE;
                 break;
             case notificationCount < 3:
@@ -42,7 +42,7 @@ var ChromeBadge = (function() {
     };
     
     var setBadge = function(notificationCount) {
-        chrome.browserAction.setBadgeText({ text: '' + (notificationCount ? notificationCount : '*') });
+        chrome.browserAction.setBadgeText({ text: '' + (_.isNumber(notificationCount) ? notificationCount : '*') });
         chrome.browserAction.setBadgeBackgroundColor(getBadgeBackgroundColor(notificationCount));        
     };
     
