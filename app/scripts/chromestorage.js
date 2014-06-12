@@ -25,6 +25,20 @@ var ChromeStorage = (function() {
         chrome.storage.local.set(object, callback || defaultCallback);
     };
     
+    var append = function(key, values) {
+        read(key).then(function(result) {
+            var data = {};
+            
+            if (!result) {
+                data[key] = values;
+            } else {
+                data[key] = result.concat(values);
+            }
+            
+            save(data);
+        });
+    };
+    
     var remove = function(key) {
         chrome.storage.local.remove(key);
     };
@@ -51,7 +65,9 @@ var ChromeStorage = (function() {
     return {
         read: read,
         save: save,
+        append: append,
         remove: remove,
         getUsage: getUsage
     };
 })();
+
