@@ -5,24 +5,39 @@
 }
 
 .chrome-bootstrap .frame .content {
-    padding-top: 5px;
+    padding-top: 0px;
     width: 550px;
 }
 
 .chrome-bootstrap section {
     margin-top: 0;
-    -webkit-padding-start: 5px;
+    margin-bottom: 0;
 }
 
 .chrome-bootstrap .highlightable li {
     padding: 5px 0;
 }
 
+.chrome-bootstrap .highlightable li dd {
+    overflow: visible;
+}
+
 .chrome-bootstrap .highlightable .tags li a {
     display: inline;
 }
 
+
 /* Custom styles */
+#notifications {
+    padding: 5px;
+}
+
+.highlightable {
+    border: 2px inset #364a73;
+    background-color: #fff;
+    -webkit-margin-before: 0;
+}
+
 .commit-thumbnail,
 .commit-info {
     display: inline-block;

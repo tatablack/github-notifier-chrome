@@ -18,7 +18,7 @@
                                 <li class="tag-clickable" data-url="<%- commit.repository.url %>"><%- commit.repository.name %></li>
                             </ul>
                         </dt>
-                        <dd><span class="commit-author"><%- commit.author.name %></span> authored this <%- commit.readableTimestamp %></dd>
+                        <dd><span class="commit-author"><%- commit.author.name %></span><span> authored this <%- commit.readableTimestamp %></span></dd>
                     </dl>
                 </div>
             </a>
@@ -27,3 +27,4 @@
         </li>
     <% }); %>
 </ul>
+

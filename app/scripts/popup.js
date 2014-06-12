@@ -34,7 +34,7 @@ $(function() {
     ChromeStorage.read('commits').then(function(result) {
         prepareCommits(result.commits);
         
-        $('.mainview').height((58 * result.commits.length) + 30);
+        $('.mainview').height((58 * result.commits.length) + 12);
         $('#notifications').html(_.templates['row']({ commits: result.commits }));
     });
 });

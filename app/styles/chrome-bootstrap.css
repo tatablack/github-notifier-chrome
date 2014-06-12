@@ -339,7 +339,7 @@
   padding: 2px 0;
 }
 .chrome-bootstrap .highlightable li:hover > a:not(.action),
-.chrome-bootstrap .highlightable li a:not(.action):focus {
+.chrome-bootstrap .highlightable li a:not(.action):hover {
   background-color: #F0F6FE;
   color: #555;
 }
