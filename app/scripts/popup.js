@@ -1,20 +1,25 @@
 /*jshint sub:true */
-/*global Promise, chrome, moment, ChromeStorage */
+/*global chrome, moment, ChromeStorage */
 'use strict';
 
 var MentionRegExp = /(?:[\s])@([A-Za-z0-9]+[A-Za-z0-9-]+)/g;
 
 function initLinks() {
-    $('body').on('click', 'a', function(evt) {
-        chrome.tabs.create({ url: $(this).attr('href') });
+    $('body').on('click', '.tag-clickable', function(evt) {
+        chrome.tabs.create({ url: $(this).data('url') });
+        evt.stopImmediatePropagation();
         return false;
     });
 
-    $('body').on('click', '.tag-clickable', function(evt) {
-        chrome.tabs.create({ url: $(this).data('url') });
+    $('body').on('click', 'a', function(evt) {
+        if ($(this).attr('href')) {
+            chrome.tabs.create({ url: $(this).attr('href') });
+        }
+        
         return false;
     });
 }
+
 
 function prepareCommits(commits) {
     _.each(commits, function(commit) {
