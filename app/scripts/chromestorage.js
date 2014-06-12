@@ -21,6 +21,7 @@ var ChromeStorage = (function() {
         }
     };
     
+    
     var save = function(object, callback) {
         chrome.storage.local.set(object, callback || defaultCallback);
     };
@@ -32,10 +33,13 @@ var ChromeStorage = (function() {
             if (!result) {
                 data[key] = values;
             } else {
-                data[key] = result.concat(values);
+                data[key] = result[key].concat(values);
             }
             
             save(data);
+        }).
+        catch(function(error) {
+            console.log('github-notifier: error while reading %s from storage: %s', key, error.message);
         });
     };
     
@@ -44,7 +48,7 @@ var ChromeStorage = (function() {
     };
     
     // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable/20463021#20463021
-    var formatFileSizeIEC = function(a,b,c,d,e) {
+    var formatFileSizeIEC = function(a, b, c, d, e) {
         return (b = Math, c = b.log, d =1024, e = c(a)/c(d) | 0, a/b.pow(d,e)).
             toFixed(2) + ' ' + ( e ? 'KMGTPEZY'[--e] + 'iB' : 'Bytes');
     };
