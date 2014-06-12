@@ -1,18 +1,8 @@
+/*jshint sub:true */
+/*global Promise, chrome, moment, ChromeStorage */
 'use strict';
 
 var MentionRegExp = /(?:[\s])@([A-Za-z0-9]+[A-Za-z0-9-]+)/g;
-
-function getFromStorage(key) {
-    return new Promise(function (resolve, reject) {
-        chrome.storage.sync.get(key, function(result) {
-            if (chrome.runtime.lastError) {
-                reject(new Error(chrome.runtime.lastError));
-            } else {
-                resolve(result[key]);
-            }
-        });
-    });
-}
 
 function initLinks() {
     $('body').on('click', 'a', function(evt) {
@@ -36,10 +26,10 @@ function prepareCommits(commits) {
 $(function() {
     initLinks();
 
-    getFromStorage('commits').then(function(commits) {
-        prepareCommits(commits);
+    ChromeStorage.read('commits').then(function(result) {
+        prepareCommits(result.commits);
         
-        $('.mainview').height((58 * commits.length) + 30);
-        $('#notifications').html(_.templates['row']({ commits: commits }));
+        $('.mainview').height((58 * result.commits.length) + 30);
+        $('#notifications').html(_.templates['row']({ commits: result.commits }));
     });
 });
