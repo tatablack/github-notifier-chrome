@@ -12,6 +12,9 @@ var Analytics = (function() {
         })(window,document,'script','https://ssl.google-analytics.com/analytics.js','ga');
     
         ga('create', { trackingId: 'UA-4904244-3', cookieDomain: 'auto' });
+
+        // http://stackoverflow.com/questions/16135000/how-do-you-integrate-universal-analytics-in-to-chrome-extensions
+        ga('set', 'checkProtocolTask', function(){});
     };
     
     var trackPage = function(title) {
