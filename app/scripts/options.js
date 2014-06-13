@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global chrome, humane, self, ChromeStorage, Marker, Installation */
+/*global chrome, humane, self, ChromeStorage, Marker, Installation, Analytics */
 var Options = (function() {
     'use strict';
     
@@ -136,7 +136,13 @@ var Options = (function() {
         });
     };
     
+    var initAnalytics = function() {
+        Analytics.init();
+        Analytics.trackPage('Options');
+    };
+    
     $(function() {
+        initAnalytics();
         initOptions();
         initFieldListeners();
         initButtonListeners();
