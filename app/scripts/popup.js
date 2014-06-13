@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global chrome, moment, ChromeStorage, ga, Analytics */
+/*global $, chrome, moment, ChromeStorage, ga, Analytics */
 var Popup = (function() {
     'use strict';
     
@@ -36,14 +36,18 @@ var Popup = (function() {
         Analytics.trackPage('Popup');
     };
     
-    var initActions = function() {
-        $('body').on('click', '.dismiss', function(evt) {
+    var initActions = function(className) {
+        $('body').on('click', '.' + className, function(evt) {
+            Analytics.trackEvent(className, 'click');
+
             var listItem = $(this).closest('li');
-            listItem.addClass('dismissing');
+            listItem.addClass(className + '-away');
+
             _.delay(function() {
                 listItem.remove();
                 $('.mainview').height($('.mainview').height() - 58);
             }, 900);
+
             evt.stopImmediatePropagation();
             return false;
         });
@@ -51,7 +55,8 @@ var Popup = (function() {
 
     $(function() {
         initAnalytics();
-        initActions();
+        initActions('dismiss');
+        initActions('reviewed');
         initLinks();
     
         ChromeStorage.read('commits').then(function(result) {
