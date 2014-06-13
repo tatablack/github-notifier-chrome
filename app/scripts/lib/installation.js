@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global ChromeStorage, uuid, Promise */
+/*global $, _, console, chrome, ChromeStorage, uuid, Promise */
 var Installation = (function() {
     'use strict';
 
@@ -8,7 +8,6 @@ var Installation = (function() {
     var getId = function() {
         return installationId;
     };
-    
     
     var ensureId = function() {
         ChromeStorage.read('installation').then(

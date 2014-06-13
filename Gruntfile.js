@@ -280,9 +280,9 @@ module.exports = function (grunt) {
                 options: {
                     buildnumber: true,
                     background: {
-                        target: 'scripts/background.js',
+                        target: 'scripts/extension/background.js',
                         exclude: [
-                            'scripts/chromereload.js'
+                            'scripts/extension/chromereload.js'
                         ]
                     }
                 },
@@ -308,7 +308,7 @@ module.exports = function (grunt) {
 
         lodash: {
             target: {
-                dest: 'app/lib/lodash.templates.js'
+                dest: 'app/scripts/lib/lodash.templates.js'
             },
             options: {
                 // modifiers for prepared builds

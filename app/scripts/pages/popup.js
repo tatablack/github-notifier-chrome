@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global $, chrome, moment, ChromeStorage, ga, Analytics */
+/*global $, _, chrome, moment, ChromeStorage, ga, Analytics */
 var Popup = (function() {
     'use strict';
     

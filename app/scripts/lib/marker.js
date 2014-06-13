@@ -1,4 +1,5 @@
 /*jshint unused:false */
+/*global $ */
 var Marker = (function() {
     'use strict';
 

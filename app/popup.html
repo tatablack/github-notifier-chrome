@@ -13,15 +13,17 @@
         <link href="styles/popup.css" rel="stylesheet">
         <!-- endbuild -->
 
-        <script src="lib/zepto.min.js"></script>
-        <script src="lib/moment.min.js"></script>
-        <script src="lib/lodash.custom.min.js"></script>
-        <script src="lib/lodash.templates.js"></script>
-        <script src="scripts/Analytics.js"></script>
-        <script src="scripts/ChromeStorage.js"></script>
+        <script src="scripts/lib/ext/zepto.min.js"></script>
+        <script src="scripts/lib/ext/moment.min.js"></script>
+        <script src="scripts/lib/ext/lodash.custom.min.js"></script>
+
+        <script src="scripts/browser/ChromeStorage.js"></script>
+
+        <script src="scripts/lib/analytics.js"></script>
+        <script src="scripts/lib/lodash.templates.js"></script>
 
         <!-- build:js scripts/popup.js -->
-        <script src="scripts/popup.js"></script>
+        <script src="scripts/pages/popup.js"></script>
         <!-- endbuild -->
     </head>
     <body class="chrome-bootstrap">

@@ -13,17 +13,21 @@
 
     "background": {
         "scripts": [
-            "scripts/chromereload.js",
-            "lib/lodash.custom.min.js",
-            "lib/zepto.min.js",
-            "lib/promiscuous-browser.js",
-            "scripts/chromestorage.js",
-            "scripts/chromenotifications.js",
-            "scripts/chromebadge.js",
-            "scripts/githubnotifications.js",
-            "scripts/uuid.js",
-            "scripts/installation.js",
-            "scripts/background.js"
+            "scripts/extension/chromereload.js",
+
+            "scripts/lib/ext/lodash.custom.min.js",
+            "scripts/lib/ext/zepto.min.js",
+            "scripts/lib/ext/promiscuous-browser.js",
+            "scripts/lib/ext/uuid.js",
+
+            "scripts/browser/chromestorage.js",
+            "scripts/browser/chromenotifications.js",
+            "scripts/browser/chromebadge.js",
+
+            "scripts/lib/githubnotifications.js",
+            "scripts/lib/installation.js",
+
+            "scripts/extension/background.js"
         ],
         "persistent": false
     },

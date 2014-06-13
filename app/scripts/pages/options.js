@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global chrome, humane, self, ChromeStorage, Marker, Installation, Analytics */
+/*global $, _, console, chrome, humane, self, ChromeStorage, Marker, Installation, Analytics */
 var Options = (function() {
     'use strict';
     

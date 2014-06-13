@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global chrome */
+/*global _, chrome */
 var ChromeNotifications = (function() {
     'use strict';
     
