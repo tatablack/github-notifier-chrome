@@ -36,8 +36,22 @@ var Popup = (function() {
         Analytics.trackPage('Popup');
     };
     
+    var initActions = function() {
+        $('body').on('click', '.dismiss', function(evt) {
+            var listItem = $(this).closest('li');
+            listItem.addClass('dismissing');
+            _.delay(function() {
+                listItem.remove();
+                $('.mainview').height($('.mainview').height() - 58);
+            }, 900);
+            evt.stopImmediatePropagation();
+            return false;
+        });
+    };
+
     $(function() {
         initAnalytics();
+        initActions();
         initLinks();
     
         ChromeStorage.read('commits').then(function(result) {
