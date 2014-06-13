@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'icomoon';
-   	src:url('/fonts/icomoon.eot?-tc20s');
-   	src:url('/fonts/icomoon.eot?#iefix-tc20s') format('embedded-opentype'),
-   		url('/fonts/icomoon.woff?-tc20s') format('woff'),
-   		url('/fonts/icomoon.ttf?-tc20s') format('truetype'),
-   		url('/fonts/icomoon.svg?-tc20s#icomoon') format('svg');
-   	font-weight: normal;
-   	font-style: normal;
+	font-family: 'icomoon';
+	src:url('/fonts/icomoon.eot?-qawyw9');
+	src:url('/fonts/icomoon.eot?#iefix-qawyw9') format('embedded-opentype'),
+		url('/fonts/icomoon.woff?-qawyw9') format('woff'),
+		url('/fonts/icomoon.ttf?-qawyw9') format('truetype'),
+		url('/fonts/icomoon.svg?-qawyw9#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -69,4 +69,12 @@
 .icon-plus:before {
 	content: "\e608";
     float: left;
+}
+
+.icon-remove:before {
+	content: "\e609";
+}
+
+.icon-signup:before {
+	content: "\e60a";
 }
