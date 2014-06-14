@@ -6,7 +6,7 @@ var Console = (function() {
     var getTimestamp = function() {
         var localMoment = moment();
         localMoment.lang('en');
-        return localMoment.format('YYYY-MM-DD h:mm:ss.SSS');
+        return localMoment.format('YYYY-MM-DD HH:mm:ss.SSS');
     };
 
     var wrappers = {
