@@ -1,6 +1,6 @@
 <ul class="highlightable">
     <% _.forEach(commits, function(commit) { %>
-        <li>
+        <li data-commit-id="<%- commit.id %>">
             <a href="<%- commit.url %>">
                 <div class="commit-thumbnail">
                     <img src="<%- 'http://www.gravatar.com/avatar/' + commit.author.emailHash + '?d=identicon&s=32' %>">
@@ -22,7 +22,8 @@
                     </dl>
                 </div>
 
-                <span class="dismiss icon-remove" title="Dismiss"></span>
+                
+                <span class="dismissed icon-remove" title="Dismiss"></span>
                 <span class="reviewed icon-signup" title="Mark as reviewed"></span>
             </a>
         </li>

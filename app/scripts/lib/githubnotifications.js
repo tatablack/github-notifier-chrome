@@ -18,10 +18,11 @@ var GitHubNotifications = (function() {
                     success: function(response) {
                         var count = response.commits ? response.commits.length : 0;
                         console.log('github-notifier: %d commits retrieved', count);
-        
+
                         ChromeBadge.setAppearance(response.commits.length);
                         ChromeNotifications.show(response.commits);
-                        ChromeStorage.append('commits', response.commits);
+                        ChromeStorage.appendToArray('commits', response.commits);
+                        ChromeStorage.increment('commitsReceived', response.commits.length);
                     },
                     error: function(xhr) {
                         console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);

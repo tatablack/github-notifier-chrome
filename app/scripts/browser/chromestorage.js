@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global console, chrome, Promise */
+/*global _, console, chrome, Promise */
 var ChromeStorage = (function() {
     'use strict';
     
@@ -26,11 +26,28 @@ var ChromeStorage = (function() {
         chrome.storage.local.set(object, callback || defaultCallback);
     };
     
-    var append = function(key, values) {
+    var increment = function(key, value) {
         read(key).then(function(result) {
             var data = {};
             
             if (!result) {
+                data[key] = value;
+            } else {
+                data[key] = result[key] + value;
+            }
+            
+            save(data);
+        }).
+        catch(function(error) {
+            console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
+        });
+    };
+    
+    var appendToArray = function(key, values) {
+        read(key).then(function(result) {
+            var data = {};
+            
+            if (!result[key]) {
                 data[key] = values;
             } else {
                 data[key] = result[key].concat(values);
@@ -39,12 +56,27 @@ var ChromeStorage = (function() {
             save(data);
         }).
         catch(function(error) {
-            console.log('github-notifier: error while reading %s from storage: %s', key, error.message);
+            console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
         });
     };
     
     var remove = function(key) {
         chrome.storage.local.remove(key);
+    };
+    
+    var removeFromArray = function(key, name, valueToRemove) {
+        read(key).then(function(result) {
+            var updatedResult = {};
+            
+            updatedResult[key] = _.filter(result[key], function(value) {
+                return value[name] !== valueToRemove;
+            });
+            
+            save(updatedResult);
+        }).
+        catch(function(error) {
+            console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
+        });
     };
     
     // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable/20463021#20463021
@@ -69,8 +101,10 @@ var ChromeStorage = (function() {
     return {
         read: read,
         save: save,
-        append: append,
+        appendToArray: appendToArray,
+        increment: increment,
         remove: remove,
+        removeFromArray: removeFromArray,
         getUsage: getUsage
     };
 })();

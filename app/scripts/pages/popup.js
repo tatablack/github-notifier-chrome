@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global $, _, chrome, moment, ChromeStorage, ga, Analytics */
+/*global $, _, chrome, moment, ChromeStorage, ChromeBadge, ga, Analytics */
 var Popup = (function() {
     'use strict';
     
@@ -38,10 +38,14 @@ var Popup = (function() {
     
     var initActions = function(className) {
         $('body').on('click', '.' + className, function(evt) {
+            var listItem = $(this).closest('li');
+
+            listItem.addClass(className + '-away');
             Analytics.trackEvent(className, 'click');
 
-            var listItem = $(this).closest('li');
-            listItem.addClass(className + '-away');
+            ChromeStorage.removeFromArray('commits', 'id', listItem.data('commit-id'));
+            ChromeStorage.increment('commits' + className.charAt(0).toUpperCase() + className.slice(1), 1);
+            ChromeBadge.setAppearance($('.commit-thumbnail').length - 1);
 
             _.delay(function() {
                 listItem.remove();
@@ -55,7 +59,7 @@ var Popup = (function() {
 
     $(function() {
         initAnalytics();
-        initActions('dismiss');
+        initActions('dismissed');
         initActions('reviewed');
         initLinks();
     
