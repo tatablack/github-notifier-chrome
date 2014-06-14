@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global $, _, console, chrome, ChromeStorage, uuid, Promise */
+/*global $, _, Console, chrome, ChromeStorage, uuid, Promise */
 var Installation = (function() {
     'use strict';
     
@@ -17,15 +17,15 @@ var Installation = (function() {
                          }
                     }, function() {
                         if (chrome.runtime.lastError) {
-                            console.error('github-notifier: unable to save a new installation ID. Error reported: %s', chrome.runtime.lastError.message);
+                            Console.error('github-notifier: unable to save a new installation ID. Error reported: %s', chrome.runtime.lastError.message);
                         } else {
-                            console.log('github-notifier: new installation. Created installation id %s', desiredId);
+                            Console.info('github-notifier: new installation. Created installation id %s', desiredId);
                         }
                     });
                 }
             },
             function(error) {
-                console.error('github-notifier: unable to look up an existing installation ID: ' + error);
+                Console.error('github-notifier: unable to look up an existing installation ID: ' + error);
             }
         );
     };
@@ -40,11 +40,11 @@ var Installation = (function() {
              }),
              success: function() {
                  ChromeStorage.save({ installation: { installationId: installationId, registered: true } });
-                 console.log('github-notifier: registered the current installation (%s) with %s', installationId, listener);
+                 Console.info('github-notifier: registered the current installation (%s) with %s', installationId, listener);
                  callback();
              },
              error: function(xhr) {
-                 console.log('github-notifier: unable to register the current installation. Status: %s', xhr.status);
+                 Console.error('github-notifier: unable to register the current installation. Status: %s', xhr.status);
              }
         });
     };
@@ -57,11 +57,11 @@ var Installation = (function() {
                  username: username
              }),
              success: function() {
-                 console.log('github-notifier: updated the current installation (%s) with %s', installationId, listener);
+                 Console.info('github-notifier: updated the current installation (%s) with %s', installationId, listener);
                  callback();
              },
              error: function(xhr) {
-                 console.log('github-notifier: unable top update the current installation. Status: %s', xhr.status);
+                 Console.error('github-notifier: unable to update the current installation. Status: %s', xhr.status);
              }
         });
     };
@@ -80,7 +80,7 @@ var Installation = (function() {
                 }
             },
             function(error) {
-                console.error('github-notifier: unable to read from local storage: ' + error);
+                Console.error('github-notifier: unable to read from local storage: ' + error);
             }
         );        
     };

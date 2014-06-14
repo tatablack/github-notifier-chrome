@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global $, _, console, chrome, humane, self, ChromeStorage, Marker, Installation, Analytics */
+/*global $, _, Console, chrome, humane, self, ChromeStorage, Marker, Installation, Analytics */
 var Options = (function() {
     'use strict';
     
@@ -20,7 +20,7 @@ var Options = (function() {
         }
         
         if (currentRequest) {
-            console.log('github-notifier: a request was already executing');
+            Console.log('github-notifier: a request was already executing');
             currentRequest.abort();
         }
         
@@ -125,7 +125,7 @@ var Options = (function() {
         
         $('.storage-information').on('click', function() {
             ChromeStorage.read(null).then(function(result) {
-                console.log('github-notifier: storage contents', result);
+                Console.log('github-notifier: storage contents', result);
             });
         });
     };

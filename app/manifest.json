@@ -19,6 +19,9 @@
             "scripts/lib/ext/zepto.min.js",
             "scripts/lib/ext/promiscuous-browser.js",
             "scripts/lib/ext/uuid.js",
+            "scripts/lib/ext/moment.min.js",
+
+            "scripts/lib/console.js",
 
             "scripts/browser/chromestorage.js",
             "scripts/browser/chromenotifications.js",

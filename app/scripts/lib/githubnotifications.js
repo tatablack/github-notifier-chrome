@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global $, _, console, ChromeStorage, ChromeBadge, ChromeNotifications */
+/*global $, _, Console, ChromeStorage, ChromeBadge, ChromeNotifications */
 var GitHubNotifications = (function() {
     'use strict';
     
@@ -17,7 +17,7 @@ var GitHubNotifications = (function() {
                     },
                     success: function(response) {
                         var count = response.commits ? response.commits.length : 0;
-                        console.log('github-notifier: %d commits retrieved', count);
+                        Console.log('github-notifier: %d commits retrieved', count);
 
                         ChromeBadge.setAppearance(response.commits.length);
                         ChromeNotifications.show(response.commits);
@@ -25,7 +25,7 @@ var GitHubNotifications = (function() {
                         ChromeStorage.increment('commitsReceived', response.commits.length);
                     },
                     error: function(xhr) {
-                        console.log('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
+                        Console.error('github-notifier: unable to retrieve notifications. Status: %s', xhr.status);
                     }
                 });
             }

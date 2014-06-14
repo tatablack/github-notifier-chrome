@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global _, console, chrome, Promise */
+/*global _, Console, chrome, Promise */
 var ChromeStorage = (function() {
     'use strict';
     
@@ -17,7 +17,7 @@ var ChromeStorage = (function() {
     
     var defaultCallback = function() {
         if (chrome.runtime.lastError) {
-            console.error('github-notifier: unable to save. Error reported: %s', chrome.runtime.lastError.message);
+            Console.error('github-notifier: unable to save. Error reported: %s', chrome.runtime.lastError.message);
         }
     };
     
@@ -39,7 +39,7 @@ var ChromeStorage = (function() {
             save(data);
         }).
         catch(function(error) {
-            console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
+            Console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
         });
     };
     
@@ -56,7 +56,7 @@ var ChromeStorage = (function() {
             save(data);
         }).
         catch(function(error) {
-            console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
+            Console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
         });
     };
     
@@ -75,7 +75,7 @@ var ChromeStorage = (function() {
             save(updatedResult);
         }).
         catch(function(error) {
-            console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
+            Console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
         });
     };
     
@@ -89,7 +89,7 @@ var ChromeStorage = (function() {
         return new Promise(function(resolve, reject) {
             chrome.storage.local.getBytesInUse(null, function(bytesInUse) {
                 if (chrome.runtime.lastError) {
-                    console.error('github-notifier: unable to retrieve storage information. Error reported: %s', chrome.runtime.lastError.message);
+                    Console.error('github-notifier: unable to retrieve storage information. Error reported: %s', chrome.runtime.lastError.message);
                     reject(new Error(chrome.runtime.lastError.message));
                 } else {
                     resolve(formatFileSizeIEC(bytesInUse));
