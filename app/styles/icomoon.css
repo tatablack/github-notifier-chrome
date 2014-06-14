@@ -1,80 +1,94 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('/fonts/icomoon.eot?-qawyw9');
-	src:url('/fonts/icomoon.eot?#iefix-qawyw9') format('embedded-opentype'),
-		url('/fonts/icomoon.woff?-qawyw9') format('woff'),
-		url('/fonts/icomoon.ttf?-qawyw9') format('truetype'),
-		url('/fonts/icomoon.svg?-qawyw9#icomoon') format('svg');
+	src:url('/fonts/icomoon.eot?-lqohly');
+	src:url('/fonts/icomoon.eot?#iefix-lqohly') format('embedded-opentype'),
+		url('/fonts/icomoon.woff?-lqohly') format('woff'),
+		url('/fonts/icomoon.ttf?-lqohly') format('truetype'),
+		url('/fonts/icomoon.svg?-lqohly#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-	font-family: 'icomoon';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-params:before {
-	content: "\e601";
+    content: "\e601";
 }
 
 .icon-close:before {
     font-size: 16px;
-	content: "\e606";
+    content: "\e606";
 }
 
 .icon-user:before {
-	content: "\e602";
+    content: "\e602";
     margin-right: 8px;
     font-size: 15px;
 }
 
 .icon-cloud:before {
-	content: "\e603";
+    content: "\e603";
     margin-right: 8px;
     font-size: 15px;
 }
 
 .icon-checkmark:before {
-	content: "\e600";
+    content: "\e600";
     color: green;
     font-size: 14px;
 }
 
 .icon-cross:before {
-	content: "\e604";
+    content: "\e604";
     color: red;
     font-size: 14px;
 }
 
 .icon-pencil:before {
-	content: "\e605";
+    content: "\e605";
     float: left;
 }
 
 .icon-minus:before {
-	content: "\e607";
+    content: "\e607";
     float: left;
 }
 
 .icon-plus:before {
-	content: "\e608";
+    content: "\e608";
     float: left;
 }
 
 .icon-remove:before {
-	content: "\e609";
+    content: "\e609";
 }
 
 .icon-signup:before {
-	content: "\e60a";
+    content: "\e60a";
+}
+
+.icon-users:before {
+    content: "\e60b";
+}
+
+.icon-storage:before {
+    content: "\e60c";
+    font-size: 13px;
+}
+
+.icon-add:before {
+    content: "\e60d";
 }
