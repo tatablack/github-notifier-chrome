@@ -2,26 +2,24 @@
 /*global $, _, console, chrome, ChromeStorage, uuid, Promise */
 var Installation = (function() {
     'use strict';
-
-    var installationId;
-    
-    var getId = function() {
-        return installationId;
-    };
     
     var ensureId = function() {
         ChromeStorage.read('installation').then(
             function(result) {
-                if (_.keys(result).length === 1) {
-                    installationId = result.installation.installationId;
-                } else {
+                if (_.keys(result).length === 0) {
                     var desiredId = uuid.v4();
                     
-                    ChromeStorage.save({ installation: { installationId: desiredId, registered: false } }, function() {
+                    ChromeStorage.save({
+                         installation: {
+                             installationId: desiredId,
+                             installationDate: Date.now(),
+                             registered: false
+                         }
+                    }, function() {
                         if (chrome.runtime.lastError) {
                             console.error('github-notifier: unable to save a new installation ID. Error reported: %s', chrome.runtime.lastError.message);
                         } else {
-                            installationId = desiredId;                            
+                            console.log('github-notifier: new installation. Created installation id %s', desiredId);
                         }
                     });
                 }
@@ -32,7 +30,7 @@ var Installation = (function() {
         );
     };
     
-    var register = function(listener, installationId, username) {
+    var register = function(listener, installationId, username, callback) {
          $.ajax({
              url: listener + '/v1/users',
              type: 'POST',
@@ -43,6 +41,7 @@ var Installation = (function() {
              success: function() {
                  ChromeStorage.save({ installation: { installationId: installationId, registered: true } });
                  console.log('github-notifier: registered the current installation (%s) with %s', installationId, listener);
+                 callback();
              },
              error: function(xhr) {
                  console.log('github-notifier: unable to register the current installation. Status: %s', xhr.status);
@@ -50,7 +49,7 @@ var Installation = (function() {
         });
     };
     
-    var update = function(listener, installationId, username) {
+    var update = function(listener, installationId, username, callback) {
          $.ajax({
              url: listener + '/v1/users/' + installationId,
              type: 'PUT',
@@ -59,6 +58,7 @@ var Installation = (function() {
              }),
              success: function() {
                  console.log('github-notifier: updated the current installation (%s) with %s', installationId, listener);
+                 callback();
              },
              error: function(xhr) {
                  console.log('github-notifier: unable top update the current installation. Status: %s', xhr.status);
@@ -66,7 +66,7 @@ var Installation = (function() {
         });
     };
     
-    var save = function() {
+    var save = function(callback) {
         ChromeStorage.read(['installation', 'username', 'listener']).then(
             function(result) {
                 if (_.keys(result).length !== 3) {
@@ -74,9 +74,9 @@ var Installation = (function() {
                 }
                 
                 if (result.installation.registered) {
-                    update(result.listener, result.installation.installationId, result.username);
+                    update(result.listener, result.installation.installationId, result.username, callback);
                 } else {
-                    register(result.listener, result.installation.installationId, result.username);
+                    register(result.listener, result.installation.installationId, result.username, callback);
                 }
             },
             function(error) {
@@ -87,7 +87,6 @@ var Installation = (function() {
     
     return {
         ensureId: ensureId,
-        getId: getId,
         save: save
     };
 })();

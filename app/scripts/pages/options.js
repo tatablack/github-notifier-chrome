@@ -20,7 +20,7 @@ var Options = (function() {
         }
         
         if (currentRequest) {
-            console.log('A request was already executing');
+            console.log('github-notifier: a request was already executing');
             currentRequest.abort();
         }
         
@@ -56,7 +56,7 @@ var Options = (function() {
         }
     };
     
-    var saveOptions = function() {
+    var saveOptions = function(callback) {
         var options = {};
         
         _.each(['username', 'listener'], function(selector) {
@@ -71,7 +71,7 @@ var Options = (function() {
         if (!_.isEmpty(options)) {
             ChromeStorage.save(options, function() {
                 extensionMessagesSuccess.log('Options saved');
-                Installation.save();
+                Installation.save(callback);
             });
         } else {
             extensionMessagesSuccess.log('Options saved');
@@ -113,10 +113,10 @@ var Options = (function() {
     var initButtonListeners = function() {
         $('#saveButton').on('click', function(evt) {
             evt.preventDefault();
-    
-            chrome.runtime.sendMessage({ name: 'retrieveNotifications'});
-            
-            saveOptions();
+
+            saveOptions(function() {
+                chrome.runtime.sendMessage({ name: 'retrieveNotifications'});                
+            });
         });
     
         $('#closeButton').on('click', function() {
@@ -125,7 +125,7 @@ var Options = (function() {
         
         $('.storage-information').on('click', function() {
             ChromeStorage.read(null).then(function(result) {
-                console.log(result);
+                console.log('github-notifier: storage contents', result);
             });
         });
     };
