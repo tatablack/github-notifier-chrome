@@ -28,6 +28,7 @@
         
         <script src="scripts/browser/chromestorage.js"></script>
         
+        <script src="scripts/lib/lodash.templates.js"></script>
         <script src="scripts/lib/marker.js"></script>
         <script src="scripts/lib/installation.js"></script>
         <script src="scripts/lib/analytics.js"></script>
@@ -67,7 +68,22 @@
                                 </div>                                
                             </section>
 
+                            <section id="rules">
+                                <h3>Rules</h3>
+                                
+                                <div>
+                                    <p>You can also receive notifications based on the commit's author.</p>
+                                    <label for="author" class="icon-user">Add author's username:</label>
+                                    <input type="text" id="author" name="author">
+                                    <span class="icon-add"></span>
+                                </div>
+                            </section>
+                            
+                            <section id="overview">
+                            </section>
+
                             <div class="controls">
+                                <span class="icon-storage"></span>
                                 <div class="storage-information"></div>
                                 <div class="spacer"></div>
                                 <button id="saveButton">Save</button>

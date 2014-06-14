@@ -3,15 +3,17 @@
 /*global $, _, Console, chrome, humane, self, ChromeStorage, Marker, Installation, Analytics */
 var Options = (function() {
     'use strict';
-    
+
     var urlRegExp = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i,
         usernameRegExp = /^[a-zA-Z0-9]+[a-zA-Z0-9\-]*$/;
-    
+
     var currentRequest;
-    
+
     var extensionMessagesSuccess = humane.create({ baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-success' }),
         extensionMessagesError = humane.create({ timeout: 5000, clickToClose: true, baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error' });
-    
+
+    var localUsername = '',
+        localAuthors = [];
     
     var checkListenerAvailability = function(url) {
         if (!url) {
@@ -56,6 +58,17 @@ var Options = (function() {
         }
     };
     
+    var updateOverview = function() {
+        $('#overview').html(_.templates['overview']({
+            username: localUsername,
+            authors: getLocalAuthors()
+        }));
+    };
+    
+    var getLocalAuthors = function() {
+        return _.uniq(localAuthors);
+    };
+    
     var saveOptions = function(callback) {
         var options = {};
         
@@ -72,6 +85,8 @@ var Options = (function() {
             ChromeStorage.save(options, function() {
                 extensionMessagesSuccess.log('Options saved');
                 Installation.save(callback);
+                localUsername = $('#username').val();
+                updateOverview();
             });
         } else {
             extensionMessagesSuccess.log('Options saved');
@@ -79,9 +94,16 @@ var Options = (function() {
     };
     
     var initOptions = function() {
-        ChromeStorage.read(['username', 'listener']).then(
+        ChromeStorage.read(['installation', 'username', 'listener']).then(
             function(result) {
+                if (result.installation.registered && _.keys(result).length === 3) {
+                    $('#rules').show();
+                    localUsername = result.username;
+                    updateOverview();
+                }
+                
                 if (result.username) {
+                    localUsername = result.username;
                     $('#username').val(result.username);
                     checkUsernameValidity(result.username);
                 }
@@ -92,6 +114,16 @@ var Options = (function() {
                 }
             }
         );
+    };
+    
+    var addAuthor = function() {
+        var newAuthor = $('#author').val();
+        
+        if (_.isEmpty(newAuthor)) { return; }
+        
+        localAuthors.push(newAuthor);
+        updateOverview();
+        $('#author').val('');
     };
     
     var initFieldListeners = function() {
@@ -107,7 +139,18 @@ var Options = (function() {
             } else {
                 Marker.clearField('.listener-validation');
             }
-        });        
+        });
+        
+        $('.icon-add').on('click', function() {
+            addAuthor();
+        });
+        
+        $('#author').on('keydown', function(evt) {
+            if (evt.keyCode === 13) {
+                addAuthor();
+                return false;
+            }
+        });
     };
     
     var initButtonListeners = function() {
@@ -115,6 +158,8 @@ var Options = (function() {
             evt.preventDefault();
 
             saveOptions(function() {
+                $('#rules').show();
+                updateOverview();
                 chrome.runtime.sendMessage({ name: 'retrieveNotifications'});                
             });
         });

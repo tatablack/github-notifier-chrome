@@ -1,0 +1,19 @@
+<h3>Overview</h3>
+<div class="alert">You are scheduled to receive notifications when:
+    <ul>
+        <li>
+            <span class="rule-bullet">@</span><b><%- username %></b> is mentioned in a commit comment.
+        </li>
+
+        <% if (authors && authors.length) { %>
+            <li>
+                <span class="rule-bullet icon-users"></span>The commit's author is <% if (authors.length > 1) {%>one of<% } %> 
+                <ul class="tags">
+                    <% _.each(authors, function(author, idx) { %>
+                        <li><a href=""><%- author %></a><a href="#" class="delete"></a></li>
+                    <% }); %>
+                </ul>
+            </li>
+        <% } %>
+    </ul>
+</div>
