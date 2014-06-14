@@ -4,8 +4,8 @@ var ChromeStorage = (function() {
     'use strict';
     
     var read = function(key) {
-        return new Promise(function (resolve, reject) {
-            chrome.storage.local.get(key, function(result) {
+        return new Promise(function readPromise(resolve, reject) {
+            chrome.storage.local.get(key, function storageGetCallback(result) {
                 if (chrome.runtime.lastError) {
                     reject(new Error(chrome.runtime.lastError.message));
                 } else {
@@ -27,10 +27,11 @@ var ChromeStorage = (function() {
     };
     
     var increment = function(key, value) {
-        read(key).then(function(result) {
+        Console.log('Trying to increment %s with %d', key, value);
+        read(key).then(function afterIncrement(result) {
             var data = {};
             
-            if (!result) {
+            if (!result[key]) {
                 data[key] = value;
             } else {
                 data[key] = result[key] + value;
@@ -44,7 +45,7 @@ var ChromeStorage = (function() {
     };
     
     var appendToArray = function(key, values) {
-        read(key).then(function(result) {
+        read(key).then(function afterAppendToArray(result) {
             var data = {};
             
             if (!result[key]) {
@@ -64,15 +65,15 @@ var ChromeStorage = (function() {
         chrome.storage.local.remove(key);
     };
     
-    var removeFromArray = function(key, name, valueToRemove) {
-        read(key).then(function(result) {
+    var removeFromArray = function(key, name, valueToRemove, callback) {
+        read(key).then(function afterRemoveFromArray(result) {
             var updatedResult = {};
             
             updatedResult[key] = _.filter(result[key], function(value) {
                 return value[name] !== valueToRemove;
             });
-            
-            save(updatedResult);
+
+            save(updatedResult, callback);
         }).
         catch(function(error) {
             Console.error('github-notifier: error while reading %s from storage: %s', key, error.message);
@@ -86,8 +87,8 @@ var ChromeStorage = (function() {
     };
 
     var getUsage = function() {
-        return new Promise(function(resolve, reject) {
-            chrome.storage.local.getBytesInUse(null, function(bytesInUse) {
+        return new Promise(function getUsagePromise(resolve, reject) {
+            chrome.storage.local.getBytesInUse(null, function afterGetBytesInUse(bytesInUse) {
                 if (chrome.runtime.lastError) {
                     Console.error('github-notifier: unable to retrieve storage information. Error reported: %s', chrome.runtime.lastError.message);
                     reject(new Error(chrome.runtime.lastError.message));
