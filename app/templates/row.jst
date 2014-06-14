@@ -1,32 +1,35 @@
-<ul class="highlightable">
-    <% _.forEach(commits, function(commit) { %>
-        <li data-commit-id="<%- commit.id %>">
-            <a href="<%- commit.url %>">
-                <div class="commit-thumbnail">
-                    <img src="<%- 'http://www.gravatar.com/avatar/' + commit.author.emailHash + '?d=identicon&s=32' %>">
-                </div>
-                <div class="commit-files">
-                    <div class="icon-plus commit-files-added"><%- commit.added.length %></div>
-                    <div class="icon-pencil commit-files-modified"><%- commit.modified.length %></div>
-                    <div class="icon-minus commit-files-removed"><%- commit.removed.length %></div>
-                </div>
-                <div class="commit-info">
-                    <div class="commit-message"><%- commit.parsedMessage %></div>
-                    <dl>
-                        <dt>
-                            <ul class="tags">
-                                <li class="tag-clickable" data-url="<%- commit.repository.url %>"><%- commit.repository.name %></li>
-                            </ul>
-                        </dt>
-                        <dd><span class="commit-author"><%- commit.author.name %></span><span> authored this <%- commit.readableTimestamp %></span></dd>
-                    </dl>
-                </div>
-
-                
-                <span class="dismissed icon-remove" title="Dismiss"></span>
-                <span class="reviewed icon-signup" title="Mark as reviewed"></span>
-            </a>
-        </li>
-    <% }); %>
-</ul>
-
+<% if (!commits.length) { %>
+    <h2 class="alert">Nothing to see here... yet. Move along.</h2>
+<% } else { %>
+    <ul class="highlightable">
+        <% _.forEach(commits, function(commit) { %>
+            <li data-commit-id="<%- commit.id %>">
+                <a href="<%- commit.url %>">
+                    <div class="commit-thumbnail">
+                        <img src="<%- 'http://www.gravatar.com/avatar/' + commit.author.emailHash + '?d=identicon&s=32' %>">
+                    </div>
+                    <div class="commit-files">
+                        <div class="icon-plus commit-files-added"><%- commit.added.length %></div>
+                        <div class="icon-pencil commit-files-modified"><%- commit.modified.length %></div>
+                        <div class="icon-minus commit-files-removed"><%- commit.removed.length %></div>
+                    </div>
+                    <div class="commit-info">
+                        <div class="commit-message"><%- commit.parsedMessage %></div>
+                        <dl>
+                            <dt>
+                                <ul class="tags">
+                                    <li class="tag-clickable" data-url="<%- commit.repository.url %>"><%- commit.repository.name %></li>
+                                </ul>
+                            </dt>
+                            <dd><span class="commit-author"><%- commit.author.name %></span><span> authored this <%- commit.readableTimestamp %></span></dd>
+                        </dl>
+                    </div>
+    
+                    
+                    <span class="dismissed icon-remove" title="Dismiss"></span>
+                    <span class="reviewed icon-signup" title="Mark as reviewed"></span>
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+<% } %>

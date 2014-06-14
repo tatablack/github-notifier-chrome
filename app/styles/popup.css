@@ -28,12 +28,16 @@
 
 
 /* Custom styles */
+h2.alert {
+    text-align: center;
+    margin-top: 0;
+}
+
 #notifications {
     padding: 5px;
 }
 
 .highlightable {
-    border: 2px inset #364a73;
     background-color: #fff;
     -webkit-margin-before: 0;
 }

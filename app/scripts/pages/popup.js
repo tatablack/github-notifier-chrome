@@ -67,7 +67,12 @@ var Popup = (function() {
         ChromeStorage.read('commits').then(function initPopup(result) {
             prepareCommits(result.commits);
             
-            $('.mainview').height((58 * result.commits.length) + 12);
+            if (result.commits.length) {
+                $('.mainview').height((58 * result.commits.length) + 12);
+            } else {
+                $('.mainview').height(48);
+            }
+            
             $('#notifications').html(_.templates['row']({ commits: result.commits }));
         });
     });    
