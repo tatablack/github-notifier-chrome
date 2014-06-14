@@ -5,15 +5,15 @@ var ChromeNotifications = (function() {
     
     var getItems = function(commits) {
         var items = {};
-        
+
         _.each(commits, function(commit) {
             if (!items[commit.repository.name]) {
                 items[commit.repository.name] = [];
             }
-            
+
             items[commit.repository.name].push(commit.author.name);
         });
-        
+
         return _.map(items, function(value, key) {
             return {
                 title: key,
@@ -26,15 +26,15 @@ var ChromeNotifications = (function() {
         if (!commits.length) {
             return;
         }
-    
+
         var items = [],
             repositories = [];
-        
+
         _.each(commits, function(commit) {
             items.push(commit.author.name);
             repositories.push(commit.repository.name);
         });
-        
+
         var notificationOptions = {
             type: 'list',
             iconUrl: 'images/icon-38.png',
@@ -43,10 +43,10 @@ var ChromeNotifications = (function() {
             contextMessage: 'You have ' + commits.length + ' new commits to review.',
             items: getItems(commits)
         };
-        
+
         chrome.notifications.create('', notificationOptions, function(notificationId) {});
     };
-    
+
     return {
         show: show
     };
