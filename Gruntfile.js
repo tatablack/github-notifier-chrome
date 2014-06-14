@@ -311,8 +311,6 @@ module.exports = function (grunt) {
                 dest: 'app/scripts/lib/lodash.templates.js'
             },
             options: {
-                // modifiers for prepared builds
-                // backbone, legacy, modern, mobile, strict, underscore
                 'template': 'app/templates/*.jst',
                 'flags': [
                     '--minify'
