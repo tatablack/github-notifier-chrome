@@ -151,6 +151,11 @@ var Options = (function() {
                 return false;
             }
         });
+        
+        $('#overview').on('click', '.delete', function() {
+            _.pull(localAuthors, $('.delete').prev().text());
+            updateOverview();
+        });
     };
     
     var initButtonListeners = function() {
