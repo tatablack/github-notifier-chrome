@@ -185,7 +185,7 @@ var Options = (function() {
         
         $('.storage-information').on('click', function() {
             ChromeStorage.read(null).then(function(result) {
-                Console.log('github-notifier: storage contents ' + String.fromCharCode(0x25BC) + '\n', result);
+                Console.info('github-notifier: storage contents ' + String.fromCharCode(0x25BC) + '\n', result);
             });
         });
     };
