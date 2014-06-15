@@ -30,14 +30,15 @@ var Installation = (function() {
         );
     };
     
-    var register = function(listener, installationId, username, callback) {
+    var register = function(listener, installationId, options, callback) {
          $.ajax({
              url: listener + '/v1/users',
              type: 'POST',
-             data: $.param({
-                 installationId: installationId,
-                 username: username
-             }),
+             data: $.param(
+                 _.merge(
+                    { installationId: installationId }, options
+                 )
+             ),
              success: function() {
                  ChromeStorage.save({ installation: { installationId: installationId, registered: true } });
                  Console.info('github-notifier: registered the current installation (%s) with %s', installationId, listener);
@@ -49,13 +50,11 @@ var Installation = (function() {
         });
     };
     
-    var update = function(listener, installationId, username, callback) {
+    var update = function(listener, installationId, options, callback) {
          $.ajax({
              url: listener + '/v1/users/' + installationId,
              type: 'PUT',
-             data: $.param({
-                 username: username
-             }),
+             data: $.param(options),
              success: function() {
                  Console.info('github-notifier: updated the current installation (%s) with %s', installationId, listener);
                  callback();
@@ -67,16 +66,18 @@ var Installation = (function() {
     };
     
     var save = function(callback) {
-        ChromeStorage.read(['installation', 'username', 'listener']).then(
+        ChromeStorage.read(['installation', 'username', 'listener', 'authors']).then(
             function(result) {
-                if (_.keys(result).length !== 3) {
+                if (_.keys(_.pick(result, ['installation', 'username', 'listener'])).length !== 3) {
                     return;
                 }
                 
                 if (result.installation.registered) {
-                    update(result.listener, result.installation.installationId, result.username, callback);
+                    update(result.listener, result.installation.installationId, _.pick(result, ['username', 'authors']), callback);
                 } else {
-                    register(result.listener, result.installation.installationId, result.username, callback);
+                    // Currently, the Options panel does not allow to add authors before registration, so
+                    // the _.pick() call in the next line is superfluous
+                    register(result.listener, result.installation.installationId, _.pick(result, ['username', 'authors']), callback);
                 }
             },
             function(error) {
