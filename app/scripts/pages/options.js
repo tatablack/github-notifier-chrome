@@ -12,8 +12,9 @@ var Options = (function() {
     var extensionMessagesSuccess = humane.create({ baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-success' }),
         extensionMessagesError = humane.create({ timeout: 5000, clickToClose: true, baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error' });
 
-    var localUsername = '',
-        localAuthors = [];
+    var options= {
+        authors: []
+    };
     
     var checkListenerAvailability = function(url) {
         if (!url) {
@@ -60,32 +61,28 @@ var Options = (function() {
     
     var updateOverview = function() {
         $('#overview').html(_.templates['overview']({
-            username: localUsername,
-            authors: getLocalAuthors()
+            username: options.username,
+            authors: options.authors
         }));
     };
     
-    var getLocalAuthors = function() {
-        return _.uniq(localAuthors);
-    };
-    
     var saveOptions = function(callback) {
-        var options = {};
+        var clonedOptions = _.clone(options);
         
-        _.each(['username', 'listener'], function(selector) {
-            var value = $('#' + selector).val();
-            if (value) {
-                options[selector] = value;
-            } else {
-                ChromeStorage.remove(selector);
+        _.each(['username', 'listener', 'authors'], function(name) {
+            if (!clonedOptions[name] || !clonedOptions[name].length) {
+                ChromeStorage.remove(name);
             }
         });
+        
+        if (!clonedOptions.authors.length) {
+            delete clonedOptions.authors;
+        }
 
-        if (!_.isEmpty(options)) {
-            ChromeStorage.save(options, function() {
+        if (!_.isEmpty(clonedOptions)) {
+            ChromeStorage.save(clonedOptions, function() {
                 extensionMessagesSuccess.log('Options saved');
                 Installation.save(callback);
-                localUsername = $('#username').val();
                 updateOverview();
             });
         } else {
@@ -94,23 +91,30 @@ var Options = (function() {
     };
     
     var initOptions = function() {
-        ChromeStorage.read(['installation', 'username', 'listener']).then(
+        ChromeStorage.read(['installation', 'username', 'listener', 'authors']).then(
             function(result) {
-                if (result.installation.registered && _.keys(result).length === 3) {
-                    $('#rules').show();
-                    localUsername = result.username;
-                    updateOverview();
-                }
-                
                 if (result.username) {
-                    localUsername = result.username;
+                    options.username = result.username;
                     $('#username').val(result.username);
                     checkUsernameValidity(result.username);
                 }
-        
+
                 if (result.listener) {
+                    options.listener = result.listener;
                     $('#listener').val(result.listener);
                     checkListenerAvailability(result.listener);
+                }
+
+                if (result.authors) {
+                    options.authors = result.authors;
+                }
+
+                if (result.installation.registered) {
+                    $('#rules').show();
+                }
+                
+                if (result.username || (result.authors)) {
+                    updateOverview();                    
                 }
             }
         );
@@ -121,8 +125,11 @@ var Options = (function() {
         
         if (_.isEmpty(newAuthor)) { return; }
         
-        localAuthors.push(newAuthor);
+        options.authors.push(newAuthor);
+        options.authors = _.uniq(options.authors);
+        
         updateOverview();
+        
         $('#author').val('');
     };
     
@@ -130,11 +137,13 @@ var Options = (function() {
         var debouncedCheckListenerAvailability = _.debounce(checkListenerAvailability, 200);
 
         $('#username').on('input', function() {
+            options.username = this.value;
             checkUsernameValidity(this.value);
         });
 
         $('#listener').on('input', function() {
             if (urlRegExp.test(this.value)) {
+                options.listener = this.value;                
                 debouncedCheckListenerAvailability(this.value);
             } else {
                 Marker.clearField('.listener-validation');
@@ -153,7 +162,7 @@ var Options = (function() {
         });
         
         $('#overview').on('click', '.delete', function() {
-            _.pull(localAuthors, $('.delete').prev().text());
+            _.pull(options.authors, $('.delete').prev().text());
             updateOverview();
         });
     };
@@ -165,7 +174,8 @@ var Options = (function() {
             saveOptions(function() {
                 $('#rules').show();
                 updateOverview();
-                chrome.runtime.sendMessage({ name: 'retrieveNotifications'});                
+                
+                _.delay(chrome.runtime.sendMessage, 2000, { name: 'retrieveNotifications'});
             });
         });
     
@@ -175,7 +185,7 @@ var Options = (function() {
         
         $('.storage-information').on('click', function() {
             ChromeStorage.read(null).then(function(result) {
-                Console.log('github-notifier: storage contents', result);
+                Console.log('github-notifier: storage contents ' + String.fromCharCode(0x25BC) + '\n', result);
             });
         });
     };
