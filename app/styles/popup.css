@@ -4,8 +4,19 @@
     width: 550px;
 }
 
+.chrome-bootstrap header {
+    width: 550px;
+    border-bottom: 1px solid #EEE;
+}
+
+.chrome-bootstrap header h2 {
+    padding: 10px 0 10px 10px;
+    margin: 0;
+    float: left;
+}
+
 .chrome-bootstrap .frame .content {
-    padding-top: 0px;
+    padding-top: 41px;
     width: 550px;
 }
 
@@ -33,6 +44,16 @@ h2.alert {
     margin-top: 0;
 }
 
+.toolbar-button {
+    margin: 10px 15px 0 0;
+    font-size: 20px;
+    float: right;    
+}
+
+.toolbar-button:hover {
+    color: #2d509a;    
+}
+
 #notifications {
     padding: 5px;
 }
@@ -49,6 +70,10 @@ h2.alert {
 
 .commit-thumbnail {
     margin-right: 2px;
+}
+
+.commit-thumbnail > img {
+    vertical-align: text-bottom;
 }
 
 .commit-message {
@@ -80,7 +105,8 @@ h2.alert {
     color: red;
 }
 
-.tag-clickable {
+.tag-clickable,
+.toolbar-button {
     cursor: pointer;
 }
 

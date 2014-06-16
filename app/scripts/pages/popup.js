@@ -1,6 +1,6 @@
 /*jshint unused:false */
 /*jshint sub:true */
-/*global $, _, chrome, Console, moment, ChromeStorage, ChromeBadge, ga, Analytics */
+/*global self, $, _, chrome, Console, moment, ChromeStorage, ChromeBadge, ChromeOptions, ga, Analytics */
 var Popup = (function() {
     'use strict';
     
@@ -67,19 +67,31 @@ var Popup = (function() {
         });
     };
 
+    var initButtons = function() {
+        $('#options').on('click', function() {
+            ChromeOptions.open();
+        });
+
+        $('#reload').on('click', function() {
+            chrome.runtime.reload();
+            self.close();
+        });
+    };
+
     $(function() {
         initAnalytics();
         initActions('dismissed');
         initActions('reviewed');
+        initButtons();
         initLinks();
     
         ChromeStorage.read('commits').then(function initPopup(result) {
             var commits = prepareCommits(result.commits);
             
             if (commits.length) {
-                $('.mainview').height((58 * commits.length) + 12);
+                $('.mainview').height((58 * commits.length) + 12 + 40);
             } else {
-                $('.mainview').height(48);
+                $('.mainview').height(48 + 40);
             }
             
             $('#notifications').html(_.templates['row']({ commits: commits }));

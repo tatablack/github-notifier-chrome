@@ -20,6 +20,7 @@
 
         <script src="scripts/browser/chromestorage.js"></script>
         <script src="scripts/browser/chromebadge.js"></script>
+        <script src="scripts/browser/chromeoptions.js"></script>
 
         <script src="scripts/lib/analytics.js"></script>
         <script src="scripts/lib/lodash.templates.js"></script>
@@ -32,6 +33,12 @@
         <div class="frame">
             <div class="mainview view">
                 <div class="selected">
+                    <header>
+                        <h2>GitHub Notifier</h2>
+                        <div id="options" class="toolbar-button icon-params" title="Open the Options page"></div>
+                        <div id="reload" class="toolbar-button icon-loop" title="Reload this extension"></div>
+                    </header>
+                    
                     <div class="content">
                         <section id="notifications"></section>                        
                     </div>
