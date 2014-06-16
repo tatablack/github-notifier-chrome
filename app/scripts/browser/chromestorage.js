@@ -27,7 +27,6 @@ var ChromeStorage = (function() {
     };
     
     var increment = function(key, value) {
-        Console.log('Trying to increment %s with %d', key, value);
         read(key).then(function afterIncrement(result) {
             var data = {};
             
@@ -53,7 +52,7 @@ var ChromeStorage = (function() {
             } else {
                 data[key] = result[key].concat(values);
             }
-            
+
             save(data);
         }).
         catch(function(error) {
