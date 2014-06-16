@@ -26,16 +26,20 @@ var Popup = (function() {
     
     var prepareCommits = function(commits) {
         _.each(commits, function(commit) {
-            commit.readableTimestamp = moment(commit.timestamp).fromNow();
+            var defaultTimestamp = moment(commit.timestamp);
+            commit.readableTimestamp = defaultTimestamp.fromNow();
+            commit.unixTimestamp = defaultTimestamp.unix();
             commit.parsedMessage = commit.message.replace(MentionRegExp, '');
         });
+        
+        return _.sortBy(commits, 'unixTimestamp').reverse();
     };
     
     var initAnalytics = function() {
         Analytics.init();
         Analytics.trackPage('Popup');
     };
-    
+
     var initActions = function(className) {
         $('body').on('click', '.' + className, function handleActionClick(evt) {
             var listItem = $(this).closest('li');
@@ -50,7 +54,12 @@ var Popup = (function() {
 
             _.delay(function updatePopupUI() {
                 listItem.remove();
-                $('.mainview').height($('.mainview').height() - 58);
+                
+                if ($('#notifications li').length) {
+                    $('.mainview').height($('.mainview').height() - 58);                    
+                } else {
+                    $('#notifications').html(_.templates['row']({ commits: [] }));
+                }
             }, 900);
 
             evt.stopImmediatePropagation();
@@ -65,15 +74,15 @@ var Popup = (function() {
         initLinks();
     
         ChromeStorage.read('commits').then(function initPopup(result) {
-            prepareCommits(result.commits);
+            var commits = prepareCommits(result.commits);
             
-            if (result.commits.length) {
-                $('.mainview').height((58 * result.commits.length) + 12);
+            if (commits.length) {
+                $('.mainview').height((58 * commits.length) + 12);
             } else {
                 $('.mainview').height(48);
             }
             
-            $('#notifications').html(_.templates['row']({ commits: result.commits }));
+            $('#notifications').html(_.templates['row']({ commits: commits }));
         });
     });    
 })();
