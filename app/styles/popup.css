@@ -37,6 +37,10 @@
     display: inline;
 }
 
+.chrome-bootstrap .highlightable li:hover > a:not(.action),
+.chrome-bootstrap .highlightable li a:not(.action):hover {
+    border: 1px solid #2d509a;
+}
 
 /* Custom styles */
 h2.alert {
@@ -55,7 +59,7 @@ h2.alert {
 }
 
 #notifications {
-    padding: 5px;
+    padding: 0 5px 5px 5px;
 }
 
 .highlightable {
@@ -78,6 +82,10 @@ h2.alert {
 
 .commit-message {
     display: inline-block;
+    overflow: hidden;
+    width: 380px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .commit-author {
