@@ -24,15 +24,17 @@ var Popup = (function() {
         });
     };
     
-    var prepareCommits = function(commits) {
-        _.each(commits, function(commit) {
+    var prepareCommits = function(result) {
+        _.each(result.commits, function(commit) {
             var defaultTimestamp = moment(commit.timestamp);
             commit.readableTimestamp = defaultTimestamp.fromNow();
             commit.unixTimestamp = defaultTimestamp.unix();
             commit.parsedMessage = commit.message.replace(MentionRegExp, '');
+            commit.reviewRequired = _.contains(commit.mentions, result.username);
         });
         
-        return _.sortBy(commits, 'unixTimestamp').reverse();
+        
+        return _.sortBy(result.commits, 'unixTimestamp').reverse();
     };
     
     var initAnalytics = function() {
@@ -85,11 +87,11 @@ var Popup = (function() {
         initButtons();
         initLinks();
     
-        ChromeStorage.read('commits').then(function initPopup(result) {
-            var commits = prepareCommits(result.commits);
+        ChromeStorage.read(['commits', 'username']).then(function initPopup(result) {
+            var commits = prepareCommits(result);
             
             if (commits.length) {
-                $('.mainview').height((58 * commits.length) + 12 + 40);
+                $('.mainview').height((59 * commits.length) + 12 + 40);
             } else {
                 $('.mainview').height(48 + 40);
             }

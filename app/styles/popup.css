@@ -82,10 +82,16 @@ h2.alert {
 
 .commit-message {
     display: inline-block;
+    color: #333;
     overflow: hidden;
     width: 380px;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.commit-review-required {
+    font-weight: bold;
+    color: indianred;
 }
 
 .commit-author {
