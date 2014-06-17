@@ -162,7 +162,7 @@ var Options = (function() {
         });
         
         $('#overview').on('click', '.delete', function() {
-            _.pull(options.authors, $('.delete').prev().text());
+            _.pull(options.authors, $(this).prev().text());
             updateOverview();
         });
     };
