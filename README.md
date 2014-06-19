@@ -1,7 +1,12 @@
 # github-notifier
 
-GitHub Notifier is a browser extension able to receive notifications from a GitHub Listener. Its purpose is to make code reviews easier, by notifying people every time they are @mentioned in a commit message, and providing one-click access to the commit diff.
-Currently, only commit notifications are supported.
+GitHub Notifier is a Chrome extension able to receive notifications from a [GitHub Listener](https://github.scm.corp.ebay.com/atata/github-listener).
+
+Its intended purpose is to make code reviews easier, for example by notifying people every time they are @mentioned in a commit message, and providing one-click access to the commit diff. It can also be used to follow the stream of commits inside a team, to focus on a particular project.
+
+Currently, only commit notifications are supported (server-side limitation).
+
+The extension adds a button to the browser's toolbar, which will show the number of notifications currently awaiting the user's attention, and will show them in a popup when clicked:
 
 ![Notifications popup](./images/popup.png "Notifications popup")
 
