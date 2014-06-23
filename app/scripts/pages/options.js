@@ -83,7 +83,6 @@ var Options = (function() {
             ChromeStorage.save(clonedOptions, function() {
                 extensionMessagesSuccess.log('Options saved');
                 Installation.save(callback);
-                updateOverview();
             });
         } else {
             extensionMessagesSuccess.log('Options saved');
@@ -174,6 +173,7 @@ var Options = (function() {
             saveOptions(function() {
                 $('#rules').show();
                 updateOverview();
+                initStorageInformation();
                 
                 _.delay(chrome.runtime.sendMessage, 2000, { name: 'retrieveNotifications'});
             });
