@@ -81,8 +81,10 @@ var ChromeStorage = (function() {
     
     // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable/20463021#20463021
     var formatFileSizeIEC = function(a, b, c, d, e) {
+        /* jshint -W016 */
         return (b = Math, c = b.log, d =1024, e = c(a)/c(d) | 0, a/b.pow(d,e)).
             toFixed(2) + ' ' + ( e ? 'KMGTPEZY'[--e] + 'iB' : 'Bytes');
+        /* jshint +W016 */
     };
 
     var getUsage = function() {

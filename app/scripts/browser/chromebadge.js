@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global chrome, ChromeStorage */
+/*global _, chrome, ChromeStorage */
 var ChromeBadge = (function() {
     'use strict';
     
