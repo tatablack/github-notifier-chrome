@@ -1,14 +1,14 @@
 /*jshint unused:false */
-/*global $, _, Console, chrome, ChromeStorage, uuid, Promise */
+/*jshint -W079 */
 var Installation = (function() {
     'use strict';
-    
+
     var ensureId = function() {
         ChromeStorage.read('installation').then(
             function(result) {
                 if (_.keys(result).length === 0) {
                     var desiredId = uuid.v4();
-                    
+
                     ChromeStorage.save({
                          installation: {
                              installationId: desiredId,
@@ -29,7 +29,7 @@ var Installation = (function() {
             }
         );
     };
-    
+
     var register = function(listener, installationId, options, callback) {
          $.ajax({
              url: listener + '/v1/users',
@@ -49,7 +49,7 @@ var Installation = (function() {
              }
         });
     };
-    
+
     var update = function(listener, installationId, options, callback) {
          $.ajax({
              url: listener + '/v1/users/' + installationId,
@@ -64,14 +64,14 @@ var Installation = (function() {
              }
         });
     };
-    
+
     var save = function(callback) {
         ChromeStorage.read(['installation', 'username', 'listener', 'authors']).then(
             function(result) {
                 if (_.keys(_.pick(result, ['installation', 'username', 'listener'])).length !== 3) {
                     return;
                 }
-                
+
                 if (result.installation.registered) {
                     update(result.listener, result.installation.installationId, _.pick(result, ['username', 'authors']), callback);
                 } else {
@@ -83,9 +83,9 @@ var Installation = (function() {
             function(error) {
                 Console.error('github-notifier: unable to read from local storage: ' + error);
             }
-        );        
+        );
     };
-    
+
     return {
         ensureId: ensureId,
         save: save

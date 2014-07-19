@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global console, moment */
+/*jshint -W079 */
 var Console = (function() {
     'use strict';
 
@@ -13,7 +13,7 @@ var Console = (function() {
         log: console.log.bind(console),
         info: console.info.bind(console),
         warn: console.warn.bind(console),
-        error: console.error.bind(console)        
+        error: console.error.bind(console)
     };
      
     var output = function(type, args) {

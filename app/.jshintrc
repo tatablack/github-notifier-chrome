@@ -17,5 +17,23 @@
     "unused": true,
     "strict": true,
     "trailing": true,
-    "smarttabs": true
+    "smarttabs": true,
+
+    "predef"       : [
+        "_",
+        "$",
+        "Promise",
+        "console",
+        "moment",
+        "uuid",
+        "Console",
+        "chrome",
+        "ChromeStorage",
+        "ChromeBadge",
+        "ChromeNotifications",
+        "GitHubNotifications",
+        "ChromeStorage",
+        "Installation",
+        "require"
+    ]
 }

@@ -1,5 +1,4 @@
 /*jshint unused:false */
-/*global Console, chrome, ChromeBadge, GitHubNotifications, Installation */
 var Background = (function() {
     'use strict';
     
@@ -11,7 +10,7 @@ var Background = (function() {
     };
 
     // As soon as we create this alarm, we want to
-    // retrieve notifications. And every 5 minuts after that.
+    // retrieve notifications. And every 5 minutes after that.
     var createAlarm = function() {
         chrome.alarms.create('retrieveNotifications', {
             when: Date.now(),
@@ -34,7 +33,7 @@ var Background = (function() {
         chrome.alarms.onAlarm.addListener(retrieveNotificationsTrigger);
         chrome.runtime.onMessage.addListener(retrieveNotificationsTrigger);
     };
-    
+
     // Let's make sure things start rolling
     initListeners();
 })();

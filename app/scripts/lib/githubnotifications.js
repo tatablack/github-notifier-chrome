@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global $, _, Console, ChromeStorage, ChromeBadge, ChromeNotifications */
+/*jshint -W079 */
 var GitHubNotifications = (function() {
     'use strict';
     

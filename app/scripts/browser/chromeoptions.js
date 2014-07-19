@@ -1,5 +1,5 @@
 /*jshint unused:false */
-/*global chrome */
+/*jshint -W079 */
 var ChromeOptions = (function() {
     'use strict';
     
