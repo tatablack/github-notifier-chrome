@@ -15,7 +15,7 @@ var Console = (function() {
         warn: console.warn.bind(console),
         error: console.error.bind(console)
     };
-     
+
     var output = function(type, args) {
         if (!args.length) { return; }
 
@@ -25,29 +25,29 @@ var Console = (function() {
         if (typeof args[0] === 'string') {
             customArgs[0] = '%s ' + args[0];
             customArgs.splice(1, 0, timestamp);
-            wrappers[type].apply(this, customArgs);            
+            wrappers[type].apply(this, customArgs);
         } else {
             customArgs.splice(0, 0, timestamp);
-            wrappers[type].apply(this, customArgs);            
+            wrappers[type].apply(this, customArgs);
         }
     };
     
     var log = function() {
         output('log', arguments);
     };
-    
+
     var info = function() {
         output('info', arguments);
     };
-    
+
     var warn = function() {
         output('warn', arguments);
     };
-    
+
     var error = function() {
         output('error', arguments);
     };
-    
+
     return {
         log: log,
         info: info,
