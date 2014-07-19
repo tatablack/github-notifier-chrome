@@ -6,7 +6,7 @@
             <li data-commit-id="<%- commit.id %>">
                 <a href="<%- commit.url %>">
                     <div class="commit-thumbnail">
-                        <img src="<%- 'http://www.gravatar.com/avatar/' + commit.author.emailHash + '?d=identicon&s=32' %>">
+                        <img src="<%- commit.author.avatarUrl ? commit.author.avatarUrl + '&s=32' : 'http://www.gravatar.com/avatar/' + commit.author.emailHash + '?d=identicon&s=32' %>">
                     </div>
                     <div class="commit-files">
                         <div class="icon-plus commit-files-added"><%- commit.added.length %></div>
