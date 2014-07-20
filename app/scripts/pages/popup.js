@@ -27,13 +27,20 @@ var Popup = (function() {
     var prepareCommits = function(result) {
         _.each(result.commits, function(commit) {
             var defaultTimestamp = moment(commit.timestamp);
+            
+            // Display purposes
             commit.readableTimestamp = defaultTimestamp.fromNow();
+            
+            // Sorting purposes
             commit.unixTimestamp = defaultTimestamp.unix();
+            
+            // Remove mentions from the message
             commit.parsedMessage = commit.message.replace(MentionRegExp, '');
+            
+            // Needed to highlight a review request
             commit.reviewRequired = _.contains(commit.mentions, result.username);
         });
-        
-        
+
         return _.sortBy(result.commits, 'unixTimestamp').reverse();
     };
     
