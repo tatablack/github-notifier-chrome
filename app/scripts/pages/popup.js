@@ -30,7 +30,8 @@ var Popup = (function() {
             
             // Display purposes
             commit.readableTimestamp = defaultTimestamp.fromNow();
-            
+            commit.extendedTimestamp = defaultTimestamp.format('dddd, MMMM DD YYYY, HH:mm:ss');
+
             // Sorting purposes
             commit.unixTimestamp = defaultTimestamp.unix();
             
