@@ -78,6 +78,8 @@ h2.alert {
 
 .commit-thumbnail > img {
     vertical-align: text-bottom;
+    max-width: 32px;
+    max-height: 32px;
 }
 
 .commit-message {
@@ -168,6 +170,17 @@ h2.alert {
 .chrome-bootstrap .highlightable li span.reviewed:hover {
     color: #00845c;
     border-color: #00845c;
+}
+
+.reviewed-already {
+    position: absolute;
+    top: 0;
+    left: 150px;
+    z-index: 1;
+}
+
+.reviewed-already:before {
+    font-size: 55px;
 }
 
 /* Removal effects */
