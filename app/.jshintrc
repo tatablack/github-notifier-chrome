@@ -22,6 +22,7 @@
     "predef"       : [
         "_",
         "$",
+        "io",
         "Promise",
         "console",
         "moment",
@@ -34,6 +35,7 @@
         "GitHubNotifications",
         "ChromeStorage",
         "Installation",
+        "Lifecycle",
         "require"
     ]
 }

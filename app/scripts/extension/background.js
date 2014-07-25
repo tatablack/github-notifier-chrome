@@ -28,6 +28,7 @@ var Background = (function() {
             ChromeBadge.setAppearance();
             Installation.ensureId();
             createAlarm();
+            Lifecycle.start();
         });
 
         chrome.alarms.onAlarm.addListener(retrieveNotificationsTrigger);

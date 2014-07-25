@@ -20,6 +20,7 @@
             "scripts/lib/ext/promiscuous-browser.js",
             "scripts/lib/ext/uuid.js",
             "scripts/lib/ext/moment.min.js",
+            "scripts/lib/ext/socket.io.js",
 
             "scripts/lib/console.js",
 
@@ -29,10 +30,10 @@
 
             "scripts/lib/githubnotifications.js",
             "scripts/lib/installation.js",
+            "scripts/lib/lifecycle.js",
 
             "scripts/extension/background.js"
-        ],
-        "persistent": false
+        ]
     },
 
     "browser_action": {
