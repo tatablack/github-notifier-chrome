@@ -69,16 +69,24 @@ var Options = (function() {
     var saveOptions = function(callback) {
         var clonedOptions = _.clone(options);
 
+        // If we cleared any existing option,
+        // remove it from the underlying storage
         _.each(['username', 'listener', 'authors'], function(name) {
             if (!clonedOptions[name] || !clonedOptions[name].length) {
                 ChromeStorage.remove(name);
             }
         });
 
+        // If no authors are present,
+        // remove the array entirely
         if (!clonedOptions.authors.length) {
             delete clonedOptions.authors;
         }
 
+        // If there are any options to save,
+        // let's do it, and then save the
+        // current Installation (still passing
+        // the callback in the end)
         if (!_.isEmpty(clonedOptions)) {
             ChromeStorage.save(clonedOptions, function() {
                 extensionMessagesSuccess.log('Options saved');
