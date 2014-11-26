@@ -4,30 +4,37 @@ var Installation = (function() {
     'use strict';
 
     var ensureId = function() {
-        ChromeStorage.read('installation').then(
-            function(result) {
-                if (_.keys(result).length === 0) {
-                    var desiredId = uuid.v4();
-
-                    ChromeStorage.save({
-                         installation: {
-                             installationId: desiredId,
-                             installationDate: Date.now(),
-                             registered: false
-                         }
-                    }, function() {
-                        if (chrome.runtime.lastError) {
-                            Console.error('github-notifier: unable to save a new installation ID. Error reported: %s', chrome.runtime.lastError.message);
-                        } else {
-                            Console.info('github-notifier: new installation. Created installation id %s', desiredId);
-                        }
-                    });
+        return new Promise(function(resolve, reject) {
+            ChromeStorage.read('installation').then(
+                function(result) {
+                    if (_.keys(result).length === 0) {
+                        var desiredId = uuid.v4();
+    
+                        ChromeStorage.save({
+                             installation: {
+                                 installationId: desiredId,
+                                 installationDate: Date.now(),
+                                 registered: false
+                             }
+                        }, function() {
+                            if (chrome.runtime.lastError) {
+                                reject(new Error(chrome.runtime.lastError.message));
+                                Console.error('github-notifier: unable to save a new installation ID. Error reported: %s', chrome.runtime.lastError.message);
+                            } else {
+                                resolve(desiredId);
+                                Console.info('github-notifier: new installation. Created installation id %s', desiredId);
+                            }
+                        });
+                    } else {
+                        resolve(result.installation.installationId);
+                    }
+                },
+                function(error) {
+                    reject(new Error(error));
+                    Console.error('github-notifier: unable to look up an existing installation ID: ' + error);
                 }
-            },
-            function(error) {
-                Console.error('github-notifier: unable to look up an existing installation ID: ' + error);
-            }
-        );
+            );
+        });
     };
 
     var register = function(listener, installationId, options, callback) {
